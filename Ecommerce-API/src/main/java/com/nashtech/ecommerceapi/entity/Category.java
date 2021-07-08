@@ -13,7 +13,7 @@ public class Category {
     @Column(name = "cname")
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
 
     public int getCategory_id() { return category_id; }

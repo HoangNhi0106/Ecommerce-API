@@ -34,7 +34,7 @@ public class Product {
     @Column(name = "created_in")
     private String created_in;
 
-    @Column(name = "created_in")
+    @Column(name = "updated_in")
     private String updated_in;
 
     public int getId() { return product_id; }

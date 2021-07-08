@@ -4,7 +4,11 @@ import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
 import com.nashtech.ecommerceapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -12,6 +16,10 @@ public class ProductServiceImpl implements ProductService {
 
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public List<Product> getAllProduct() {
+        return productRepository.findAll();
     }
 
     public Product getProduct(Integer product_id) {

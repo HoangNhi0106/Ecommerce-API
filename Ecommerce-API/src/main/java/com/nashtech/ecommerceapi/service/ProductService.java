@@ -1,10 +1,12 @@
 package com.nashtech.ecommerceapi.service;
 
 import com.nashtech.ecommerceapi.entity.Product;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 public interface ProductService {
+    public List<Product> getAllProduct();
+
     public Product getProduct(Integer product_id);
 
     public Product addProduct(Product product);
