@@ -37,7 +37,12 @@ public class Product {
     @Column(name = "updated_in")
     private String updated_in;
 
-    public int getId() { return product_id; }
+    @Column(name = "description")
+    private String description;
+
+    public String getDescription() { return description; }
+
+    public int getProduct_id() { return product_id; }
 
     public String getName() { return name; }
 
@@ -66,6 +71,8 @@ public class Product {
     public void setCreated_in(String created_in) { this.created_in = created_in; }
 
     public void setName(String name) { this.name = name; }
+
+    public void setDescription(String description) { this.description = description; }
 
     public void setImage(String image) { this.image = image; }
 
