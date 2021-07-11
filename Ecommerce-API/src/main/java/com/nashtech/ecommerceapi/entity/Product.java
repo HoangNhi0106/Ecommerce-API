@@ -1,5 +1,7 @@
 package com.nashtech.ecommerceapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,11 +9,13 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int product_id;
+    @Column(name = "product_id", nullable = false)
+    private long product_id;
 
-    @Column(name = "pname")
+    @Column(name = "pname", nullable = false)
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
@@ -42,7 +46,7 @@ public class Product {
 
     public String getDescription() { return description; }
 
-    public int getProduct_id() { return product_id; }
+    public long getProduct_id() { return product_id; }
 
     public String getName() { return name; }
 
@@ -66,7 +70,7 @@ public class Product {
 
     public void setCategory(Category category) { this.category = category; }
 
-    public void setProduct_id(int product_id) { this.product_id = product_id; }
+    public void setProduct_id(long product_id) { this.product_id = product_id; }
 
     public void setCreated_in(String created_in) { this.created_in = created_in; }
 

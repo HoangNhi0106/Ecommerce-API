@@ -8,21 +8,22 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int category_id;
+    @Column(name = "category_id", nullable = false)
+    private long category_id;
 
-    @Column(name = "cname")
+    @Column(name = "cname", nullable = false)
     private String name;
 
     @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
 
-    public int getCategory_id() { return category_id; }
+    public long getCategory_id() { return category_id; }
 
     public String getName() { return name; }
 
     public List<Product> getProducts() { return products; }
 
-    public void setCategory_id(int category_id) { this.category_id = category_id; }
+    public void setCategory_id(long category_id) { this.category_id = category_id; }
 
     public void setName(String name) { this.name = name; }
 

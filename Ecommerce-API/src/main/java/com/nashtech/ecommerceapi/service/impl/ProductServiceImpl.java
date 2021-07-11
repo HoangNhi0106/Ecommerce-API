@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service.impl;
 
+import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
 import com.nashtech.ecommerceapi.service.ProductService;
@@ -22,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProduct(Integer product_id) {
+    public Product getProductById(Long product_id) {
         return productRepository.findById(product_id).get();
     }
 
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(Integer product_id) {
+    public void deleteProduct(Long product_id) {
         productRepository.deleteById(product_id);
     }
 

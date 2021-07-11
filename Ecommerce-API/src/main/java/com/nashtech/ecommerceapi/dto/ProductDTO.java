@@ -1,15 +1,17 @@
 package com.nashtech.ecommerceapi.dto;
 
 public class ProductDTO {
-    private int product_id;
+    private long product_id;
 
     private String name;
+
+    private String category_name;
 
     private String description;
 
     private String price;
 
-    public void setProduct_id(int product_id) { this.product_id = product_id; }
+    public void setProduct_id(long product_id) { this.product_id = product_id; }
 
     public void setPrice(String price) { this.price = price; }
 
@@ -17,11 +19,19 @@ public class ProductDTO {
 
     public void setDescription(String description) { this.description = description; }
 
-    public int getProduct_id() { return product_id; }
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
+    public long getProduct_id() { return product_id; }
 
     public String getName() { return name; }
 
     public String getDescription() { return description; }
 
     public String getPrice() { return price; }
+
+    public String getCategory_name() {
+        return category_name;
+    }
 }
