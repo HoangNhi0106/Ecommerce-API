@@ -1,7 +1,6 @@
 package com.nashtech.ecommerceapi.controller;
 
 import com.nashtech.ecommerceapi.dto.ProductDTO;
-import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.ProductException;
 import com.nashtech.ecommerceapi.service.CategoryService;
