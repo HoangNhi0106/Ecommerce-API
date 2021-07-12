@@ -1,12 +1,17 @@
 package com.nashtech.ecommerceapi.controller;
 
+import com.nashtech.ecommerceapi.constant.ErrorCode;
+import com.nashtech.ecommerceapi.constant.SuccessCode;
 import com.nashtech.ecommerceapi.dto.ProductDTO;
+import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.ProductException;
 import com.nashtech.ecommerceapi.service.CategoryService;
 import com.nashtech.ecommerceapi.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataLocationNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -43,28 +48,57 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDTO> findAllProduct() {
-        List<Product> products = productService.getAllProduct();
-        List<ProductDTO> productDTOs = new ArrayList<>();
-        for (Product product : products) {
-            productDTOs.add(convertToDto(product));
+    public ResponseEntity<ResponseDTO> findAllProduct() {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            List<ProductDTO> productDTOs = new ArrayList<>();
+            List<Product> products = productService.getAllProduct();
+            for (Product product : products) {
+                productDTOs.add(convertToDto(product));
+            }
+            if (productDTOs != null) {
+                responseDTO.setData(productDTOs);
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+            }
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+            throw new ProductException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
         }
-        return productDTOs;
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @GetMapping(value = "/{id}")
-    public ProductDTO findProduct(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        if (product == null)
-            throw new ProductException(id);
-        return convertToDto(product);
+    public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Product product = productService.getProductById(id);
+            if (product != null) {
+                responseDTO.setData(convertToDto(product));
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+            }
+
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+            throw new ProductException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @PostMapping(value = "/save")
-    public ProductDTO createProduct(@Valid @RequestBody ProductDTO productDTO) throws ParseException {
-        Product product = convertToEntity(productDTO);
-        Product saveProduct = productService.addProduct(product);
-        return convertToDto(saveProduct);
+    public ResponseEntity<ResponseDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) throws ParseException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Product product = convertToEntity(productDTO);
+            Product saveProduct = productService.addProduct(product);
+            if (saveProduct != null) {
+                responseDTO.setData(convertToDto(product));
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_SAVED);
+            }
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_SAVED);
+            throw new ProductException(ErrorCode.ERROR_PRODUCT_NOT_SAVED);
+        }
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @DeleteMapping(value = "delete/{product_id}")
