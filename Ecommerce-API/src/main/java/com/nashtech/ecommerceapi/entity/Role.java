@@ -1,5 +1,7 @@
 package com.nashtech.ecommerceapi.entity;
 
+import com.nashtech.ecommerceapi.constant.ERole;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,21 +9,22 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id", nullable = false)
+    @Column(name = "role_id", unique = true)
     private long role_id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "rname", nullable = false, unique = true)
-    private String rname;
+    private ERole rname;
 
     public long getRole_id() {
         return role_id;
     }
 
-    public String getRname() {
+    public ERole getRname() {
         return rname;
     }
 
-    public void setRname(String rname) {
+    public void setRname(ERole rname) {
         this.rname = rname;
     }
 

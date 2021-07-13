@@ -5,7 +5,7 @@ public class CategoryException extends RuntimeException {
         super("Cannot fond category with id = " + id);
     }
 
-    public CategoryException(String name) {
-        super("Cannot find category " + name);
+    public CategoryException(String message) {
+        super(message);
     }
 }

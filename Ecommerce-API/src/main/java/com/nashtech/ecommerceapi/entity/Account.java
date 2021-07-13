@@ -1,14 +1,19 @@
 package com.nashtech.ecommerceapi.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "account")
+@Table(name = "account",
+    uniqueConstraints = {
+            @UniqueConstraint(columnNames = "username"),
+            @UniqueConstraint(columnNames = "email")
+    })
 public class Account {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id", nullable = false)
+    @Column(name = "account_id", unique = true)
     private long account_id;
 
     @Column(name = "firstname")
@@ -34,6 +39,12 @@ public class Account {
 
     @Column(name = "updated_in")
     private String updated_in;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "account_role",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public String getUpdated_in() {
         return updated_in;
@@ -71,6 +82,10 @@ public class Account {
         return username;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public void setUpdated_in(String updated_in) {
         this.updated_in = updated_in;
     }
@@ -105,5 +120,9 @@ public class Account {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

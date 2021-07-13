@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataLocationNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -85,6 +86,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/save")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) throws ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -102,14 +104,21 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "delete/{product_id}")
-    public HashMap<String, String> deleteProduct(@PathVariable Long product_id) {
-        Product product = productService.getProductById(product_id);
-        if (product == null)
-            throw new ProductException(product_id);
-        productService.deleteProduct(product_id);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("delete product id = " + product_id, "successful");
-        return map;
+    public ResponseEntity<ResponseDTO> deleteProduct(@PathVariable Long product_id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Product product = productService.getProductById(product_id);
+            if (product != null) {
+                productService.deleteProduct(product_id);
+                responseDTO.setData(true);
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+            }
+        } catch (Exception exception) {
+            responseDTO.setData(false);
+            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+            throw new ProductException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @PutMapping(value = "/update")
