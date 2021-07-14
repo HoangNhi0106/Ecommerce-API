@@ -10,7 +10,6 @@ import com.nashtech.ecommerceapi.service.CategoryService;
 import com.nashtech.ecommerceapi.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataLocationNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +48,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<ResponseDTO> findAllProduct() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -69,6 +69,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -87,7 +88,7 @@ public class ProductController {
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody ProductDTO productDTO) throws ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Product product = convertToEntity(productDTO);
@@ -104,6 +105,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "delete/{product_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO> deleteProduct(@PathVariable Long product_id) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -122,12 +124,20 @@ public class ProductController {
     }
 
     @PutMapping(value = "/update")
-    public HashMap<String, String> updateProduct(@Valid @RequestBody Product product) {
-        if (product == null)
-            throw new ProductException(product.getProduct_id());
-        productService.updateProduct(product);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("update product id = " + product.getProduct_id(), "successful");
-        return map;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO> updateProduct(@Valid @RequestBody ProductDTO productDTO) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Product product = convertToEntity(productDTO);
+            if (productDTO != null) {
+                productService.updateProduct(product);
+                responseDTO.setData(productDTO);
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+            }
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+            throw new ProductException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(responseDTO);
     }
 }

@@ -3,21 +3,21 @@ package com.nashtech.ecommerceapi.dto;
 public class CategoryDTO {
     private long category_id;
 
-    private String cname;
+    private String name;
 
     public void setCategory_id(long category_id) {
         this.category_id = category_id;
     }
 
-    public void setCname(String cname) {
-        this.cname = cname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getCategory_id() {
         return category_id;
     }
 
-    public String getCname() {
-        return cname;
+    public String getName() {
+        return name;
     }
 }

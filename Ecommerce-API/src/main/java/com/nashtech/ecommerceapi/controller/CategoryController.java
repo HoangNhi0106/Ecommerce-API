@@ -12,6 +12,7 @@ import com.nashtech.ecommerceapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,12 +40,15 @@ public class CategoryController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<ResponseDTO> findAllCategory() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             List<Category> categories = categoryService.getAllCategory();
             if (categories != null) {
-                responseDTO.setData(categories);
+                for (Category category : categories) {
+                    responseDTO.setData(convertToDto(category));
+                }
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_FOUND);
             }
         } catch (Exception exception) {
@@ -55,12 +59,13 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/{cname}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<ResponseDTO> findCategoryByName(@PathVariable String cname) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Category category = categoryService.getCategoryByName(cname);
             if (category != null) {
-                responseDTO.setData(category);
+                responseDTO.setData(convertToDto(category));
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_FOUND);
             }
         } catch (Exception exception) {
@@ -71,14 +76,18 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            categoryService.saveCategory(convertToEntity(categoryDTO));
-            responseDTO.setData(categoryDTO);
-            responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_SAVED);
+            Category category = convertToEntity(categoryDTO);
+            Category saveCategory = categoryService.addCategory(category);
+            if (saveCategory != null) {
+                responseDTO.setData(convertToDto(category));
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_SAVED);
+            }
         } catch (Exception exception) {
-            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_SAVED);
+            responseDTO.setErrorCode(ErrorCode.ERROR_CATEGORY_NOT_SAVED);
             throw new CategoryException(ErrorCode.ERROR_CATEGORY_NOT_SAVED);
         }
         return ResponseEntity.ok().body(responseDTO);

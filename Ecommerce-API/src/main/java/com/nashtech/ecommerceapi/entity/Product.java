@@ -15,7 +15,6 @@ public class Product {
     @Column(name = "pname", nullable = false)
     private String name;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;

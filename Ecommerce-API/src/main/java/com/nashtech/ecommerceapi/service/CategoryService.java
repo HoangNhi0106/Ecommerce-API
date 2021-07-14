@@ -11,5 +11,5 @@ public interface CategoryService {
 
     public Category getCategoryByName(String name);
 
-    public Category saveCategory(Category category);
+    public Category addCategory(Category category);
 }
