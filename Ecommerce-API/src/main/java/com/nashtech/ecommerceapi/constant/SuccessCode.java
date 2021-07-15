@@ -8,4 +8,7 @@ public class SuccessCode {
 
     public static final String SUCCESS_CATEGORY_FOUND = "SUCCESS_CATEGORY_FOUND";
     public static final String SUCCESS_CATEGORY_SAVED = "SUCCESS_CATEGORY_SAVED";
+
+    public static final String SUCCESS_RATING_FOUND = "SUCCESS_RATING_FOUND";
+    public static final String SUCCESS_RATING_SAVED = "SUCCESS_RATING_SAVED";
 }

@@ -1,7 +1,5 @@
 package com.nashtech.ecommerceapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -28,8 +26,8 @@ public class Product {
     @Column(name = "price")
     private long price;
 
-    @Column(name = "rating")
-    private float rating;
+    @Column(name = "rating_star")
+    private Float rating;
 
     @Column(name = "image")
     private String image;
@@ -49,7 +47,9 @@ public class Product {
 
     public String getName() { return name; }
 
-    public float getRating() { return rating; }
+    public Float getRating() {
+        return rating;
+    }
 
     public int getAmount() { return amount; }
 
@@ -75,13 +75,15 @@ public class Product {
 
     public void setName(String name) { this.name = name; }
 
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
     public void setDescription(String description) { this.description = description; }
 
     public void setImage(String image) { this.image = image; }
 
     public void setPrice(long price) { this.price = price; }
-
-    public void setRating(float rating) { this.rating = rating; }
 
     public void setSold(int sold) { this.sold = sold; }
 

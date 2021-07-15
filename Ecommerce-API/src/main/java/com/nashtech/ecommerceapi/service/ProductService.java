@@ -1,6 +1,5 @@
 package com.nashtech.ecommerceapi.service;
 
-import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 
 import java.util.List;
@@ -15,4 +14,6 @@ public interface ProductService {
     public void deleteProduct(Long product_id);
 
     public void updateProduct(Product product);
+
+    public Float calculateRatingStar(Product product);
 }

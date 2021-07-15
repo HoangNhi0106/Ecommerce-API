@@ -9,13 +9,19 @@ public class ProductDTO {
 
     private String description;
 
-    private String price;
+    private Float rating;
+
+    private long price;
 
     public void setProduct_id(long product_id) { this.product_id = product_id; }
 
-    public void setPrice(String price) { this.price = price; }
+    public void setPrice(long price) { this.price = price; }
 
     public void setName(String name) { this.name = name; }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
 
     public void setDescription(String description) { this.description = description; }
 
@@ -29,7 +35,11 @@ public class ProductDTO {
 
     public String getDescription() { return description; }
 
-    public String getPrice() { return price; }
+    public long getPrice() { return price; }
+
+    public Float getRating() {
+        return rating;
+    }
 
     public String getCategory_name() {
         return category_name;
