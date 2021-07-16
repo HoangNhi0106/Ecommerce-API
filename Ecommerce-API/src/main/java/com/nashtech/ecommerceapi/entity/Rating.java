@@ -1,10 +1,15 @@
 package com.nashtech.ecommerceapi.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "rating")
+@Getter
+@Setter
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,44 +29,4 @@ public class Rating {
 
     @Column(name = "star", nullable = false)
     private float star;
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setRating_id(long rating_id) {
-        this.rating_id = rating_id;
-    }
-
-    public void setStar(float star) {
-        this.star = star;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public float getStar() {
-        return star;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public long getRating_id() {
-        return rating_id;
-    }
 }

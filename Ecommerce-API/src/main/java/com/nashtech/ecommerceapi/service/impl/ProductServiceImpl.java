@@ -18,14 +18,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private RatingRepository ratingRepository;
 
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    public void setRatingRepository(RatingRepository ratingRepository) {
-        this.ratingRepository = ratingRepository;
-    }
-
     public List<Product> getAllProduct() {
         return productRepository.findAll();
     }

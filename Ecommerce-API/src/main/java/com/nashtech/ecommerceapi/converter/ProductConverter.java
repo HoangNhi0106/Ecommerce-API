@@ -27,7 +27,7 @@ public class ProductConverter {
 
     public Product convertToEntity(ProductDTO productDTO) throws ParseException {
         Product product = modelMapper.map(productDTO, Product.class);
-        product.setCategory(categoryService.getCategoryByName(productDTO.getCategory_name()));
+        //product.setCategory(categoryService.getCategoryByName(productDTO.getCategory_name()));
         return product;
     }
 }

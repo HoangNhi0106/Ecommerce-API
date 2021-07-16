@@ -5,13 +5,13 @@ import com.nashtech.ecommerceapi.entity.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
-@TestConfiguration
+@SpringBootTest
 public class ProductDTOUnitTest {
     private ModelMapper modelMapper = new ModelMapper();
 
