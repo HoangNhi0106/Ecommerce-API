@@ -85,14 +85,14 @@ public class ProductController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    @DeleteMapping(value = "delete/{product_id}")
+    @DeleteMapping(value = "delete/{productId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> deleteProduct(@PathVariable Long product_id) {
+    public ResponseEntity<ResponseDTO> deleteProduct(@PathVariable Long productId) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            Product product = productService.getProductById(product_id);
+            Product product = productService.getProductById(productId);
             if (product != null) {
-                productService.deleteProduct(product_id);
+                productService.deleteProduct(productId);
                 responseDTO.setData(true);
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
             }

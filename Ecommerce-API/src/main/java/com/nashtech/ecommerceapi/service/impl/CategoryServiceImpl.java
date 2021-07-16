@@ -18,12 +18,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getCategoryById(Long category_id) {
-        return categoryRepository.getById(category_id);
+    public Category getCategoryById(Long categoryId) {
+        return categoryRepository.getById(categoryId);
     }
 
-    public Category getCategoryByName(String name) {
-        return categoryRepository.findCategoryByName(name);
+    public Category getCategoryByName(String cname) {
+        return categoryRepository.findCategoryByCname(cname);
     }
 
     public Category addCategory(Category category) {

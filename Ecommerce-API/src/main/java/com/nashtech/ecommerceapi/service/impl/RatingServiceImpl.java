@@ -17,15 +17,15 @@ public class RatingServiceImpl implements RatingService {
         return ratingRepository.findAll();
     }
 
-    public Rating getRatingById(Long rating_id) {
-        return ratingRepository.getById(rating_id);
+    public Rating getRatingById(Long ratingId) {
+        return ratingRepository.getById(ratingId);
     }
 
     public Rating addRating(Rating rating) {
         return ratingRepository.save(rating);
     }
 
-    public void deleteRating(Long rating_id) {
-        ratingRepository.deleteById(rating_id);
+    public void deleteRating(Long ratingId) {
+        ratingRepository.deleteById(ratingId);
     }
 }

@@ -13,15 +13,15 @@ import java.util.Date;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rating_id", unique = true)
+    @Column(name = "ratingId", unique = true)
     private long rating_id;
 
     @OneToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "productId", nullable = false)
     private Product product;
 
     @OneToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "accountId", nullable = false)
     private Account account;
 
     @Column(name = "date")

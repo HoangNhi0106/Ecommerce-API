@@ -18,8 +18,8 @@ import java.util.Set;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id", unique = true)
-    private long account_id;
+    @Column(name = "accountId", unique = true)
+    private long accountId;
 
     @Column(name = "firstname")
     private String firstname;
@@ -39,15 +39,15 @@ public class Account {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "created_in")
-    private String created_in;
+    @Column(name = "createdIn")
+    private String createdIn;
 
-    @Column(name = "updated_in")
-    private String updated_in;
+    @Column(name = "updatedIn")
+    private String updatedIn;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "account_role",
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "accountId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
 }

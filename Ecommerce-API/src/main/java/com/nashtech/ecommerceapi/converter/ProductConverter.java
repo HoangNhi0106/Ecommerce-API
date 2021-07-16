@@ -21,7 +21,7 @@ public class ProductConverter {
 
     public ProductDTO convertToDto(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        productDTO.setCategory_name(product.getCategory().getName());
+        productDTO.setCategoryName(product.getCategory().getCname());
         return productDTO;
     }
 

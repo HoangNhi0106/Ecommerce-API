@@ -15,7 +15,7 @@ public class CategoryConverter {
 
     public CategoryDTO convertToDto(Category category) {
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-        categoryDTO.setCategory_id(category.getCategory_id());
+        categoryDTO.setCategoryId(category.getCategoryId());
         return categoryDTO;
     }
 

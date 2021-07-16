@@ -13,14 +13,14 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", unique = true)
+    @Column(name = "productId", unique = true)
     private long product_id;
 
     @Column(name = "pname", nullable = false)
-    private String name;
+    private String pname;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
     @Column(name = "amount")
@@ -32,16 +32,16 @@ public class Product {
     @Column(name = "price")
     private long price;
 
-    @Column(name = "rating_star")
+    @Column(name = "ratingStar")
     private Float rating;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "created_in")
+    @Column(name = "createdIn")
     private String created_in;
 
-    @Column(name = "updated_in")
+    @Column(name = "updatedIn")
     private String updated_in;
 
     @Column(name = "description")

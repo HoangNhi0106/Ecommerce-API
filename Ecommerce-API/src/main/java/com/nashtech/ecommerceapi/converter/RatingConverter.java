@@ -23,15 +23,15 @@ public class RatingConverter {
 
     public RatingDTO convertToDto(Rating rating) {
         RatingDTO ratingDTO = modelMapper.map(rating, RatingDTO.class);
-        ratingDTO.setProduct_id(rating.getProduct().getProduct_id());
-        ratingDTO.setAccount_id(rating.getAccount().getAccount_id());
+        ratingDTO.setProductId(rating.getProduct().getProduct_id());
+        ratingDTO.setAccountId(rating.getAccount().getAccountId());
         return ratingDTO;
     }
 
     public Rating convertToEntity(RatingDTO ratingDTO) throws ParseException {
         Rating rating = modelMapper.map(ratingDTO, Rating.class);
-        rating.setAccount(accountRepository.getById(ratingDTO.getAccount_id()));
-        rating.setProduct(productRepository.getById(ratingDTO.getProduct_id()));
+        rating.setAccount(accountRepository.getById(ratingDTO.getAccountId()));
+        rating.setProduct(productRepository.getById(ratingDTO.getProductId()));
         return rating;
     }
 }

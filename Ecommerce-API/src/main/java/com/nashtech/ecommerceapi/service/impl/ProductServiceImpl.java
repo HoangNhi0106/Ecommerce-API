@@ -22,16 +22,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(Long product_id) {
-        return productRepository.findById(product_id).get();
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId).get();
     }
 
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(Long product_id) {
-        productRepository.deleteById(product_id);
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
     }
 
     public void updateProduct(Product product) {

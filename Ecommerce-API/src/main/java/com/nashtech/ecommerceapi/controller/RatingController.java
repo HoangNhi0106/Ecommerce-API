@@ -62,7 +62,7 @@ public class RatingController {
                 responseDTO.setData(ratingConverter.convertToDto(rating));
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_SAVED);
 
-                Product product = productService.getProductById(ratingDTO.getProduct_id());
+                Product product = productService.getProductById(ratingDTO.getProductId());
                 product.setRating(productService.calculateRatingStar(product));
                 productService.updateProduct(product);
             }
@@ -73,18 +73,18 @@ public class RatingController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    @DeleteMapping(value = "/delete/{rating_id}")
+    @DeleteMapping(value = "/delete/{ratingId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> deleteRating(@PathVariable Long rating_id) {
+    public ResponseEntity<ResponseDTO> deleteRating(@PathVariable Long ratingId) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            Rating rating = ratingService.getRatingById(rating_id);
+            Rating rating = ratingService.getRatingById(ratingId);
             if (rating != null) {
                 responseDTO.setData(true);
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
 
                 Product product = productService.getProductById(rating.getProduct().getProduct_id());
-                ratingService.deleteRating(rating_id);
+                ratingService.deleteRating(ratingId);
                 product.setRating(productService.calculateRatingStar(product));
                 productService.updateProduct(product);
             }

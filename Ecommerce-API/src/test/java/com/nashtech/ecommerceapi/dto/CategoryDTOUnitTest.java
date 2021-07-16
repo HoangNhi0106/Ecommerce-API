@@ -17,24 +17,24 @@ public class CategoryDTOUnitTest {
     @Test
     public void whenConvertProductEntityToPostDto_thenCorrect() {
         Category category = new Category();
-        category.setCategory_id(1);
-        category.setName("xyz");
+        category.setCategoryId(1);
+        category.setCname("xyz");
 
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
 
-        assertEquals(category.getCategory_id(), categoryDTO.getCategory_id());
-        assertEquals(category.getName(), categoryDTO.getName());
+        assertEquals(category.getCategoryId(), categoryDTO.getCategoryId());
+        assertEquals(category.getCname(), categoryDTO.getCname());
     }
 
     @Test
     public void whenConvertPostDtoToPostEntity_thenCorrect() {
         CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setCategory_id(1);
-        categoryDTO.setName("xyz");
+        categoryDTO.setCategoryId(1);
+        categoryDTO.setCname("xyz");
 
         Category category = modelMapper.map(categoryDTO, Category.class);
 
-        assertEquals(category.getCategory_id(), categoryDTO.getCategory_id());
-        assertEquals(category.getName(), categoryDTO.getName());
+        assertEquals(category.getCategoryId(), categoryDTO.getCategoryId());
+        assertEquals(category.getCname(), categoryDTO.getCname());
     }
 }

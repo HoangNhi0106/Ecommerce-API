@@ -19,21 +19,21 @@ public class ProductDTOUnitTest {
     public void whenConvertProductEntityToPostDto_thenCorrect() {
         Product product = new Product();
         Category category = new Category();
-        category.setCategory_id(1);
-        category.setName("xyz");
+        category.setCategoryId(1);
+        category.setCname("xyz");
         product.setProduct_id(1);
-        product.setName("abc");
+        product.setPname("abc");
         product.setCategory(category);
         product.setAmount(50);
         product.setPrice(1000000);
         product.setDescription("hello");
 
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        productDTO.setCategory_name(product.getCategory().getName());
+        productDTO.setCategoryName(product.getCategory().getCname());
 
-        assertEquals(product.getProduct_id(), productDTO.getProduct_id());
-        assertEquals(product.getName(), productDTO.getName());
-        assertEquals(product.getCategory().getName(), productDTO.getCategory_name());
+        assertEquals(product.getProduct_id(), productDTO.getProductId());
+        assertEquals(product.getPname(), productDTO.getPname());
+        assertEquals(product.getCategory().getCname(), productDTO.getCategoryName());
         assertEquals(product.getPrice(), productDTO.getPrice());
         assertEquals(product.getDescription(), productDTO.getDescription());
     }
@@ -41,21 +41,21 @@ public class ProductDTOUnitTest {
     @Test
     public void whenConvertPostDtoToPostEntity_thenCorrect() {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setProduct_id(1);
-        productDTO.setName("abc");
-        productDTO.setCategory_name("xyz");
+        productDTO.setProductId(1);
+        productDTO.setPname("abc");
+        productDTO.setCategoryName("xyz");
         productDTO.setPrice(100000);
         productDTO.setDescription("hello");
 
         Product product = modelMapper.map(productDTO, Product.class);
         Category category = new Category();
-        category.setCategory_id(1);
-        category.setName(productDTO.getCategory_name());
+        category.setCategoryId(1);
+        category.setCname(productDTO.getCategoryName());
         product.setCategory(category);
 
-        assertEquals(product.getProduct_id(), productDTO.getProduct_id());
-        assertEquals(product.getName(), productDTO.getName());
-        assertEquals(product.getCategory().getName(), productDTO.getCategory_name());
+        assertEquals(product.getProduct_id(), productDTO.getProductId());
+        assertEquals(product.getPname(), productDTO.getPname());
+        assertEquals(product.getCategory().getCname(), productDTO.getCategoryName());
         assertEquals(product.getPrice(), productDTO.getPrice());
         assertEquals(product.getDescription(), productDTO.getDescription());
     }

@@ -19,15 +19,15 @@ public class CategoryRepositoryTest {
     @Test
     public void findCategoryByName_thenSuccess() {
         Category category = new Category();
-        category.setCategory_id(1);
-        category.setName("mobile");
+        category.setCategoryId(1);
+        category.setCname("mobile");
         assertNotNull(categoryRepository.save(category));
 
-        Category categoryTest = categoryRepository.findCategoryByName(category.getName());
+        Category categoryTest = categoryRepository.findCategoryByCname(category.getCname());
 
         assertNotNull(categoryTest);
 
-        assertEquals(category.getCategory_id(), categoryTest.getCategory_id());
-        assertEquals(category.getName(), categoryTest.getName());
+        assertEquals(category.getCategoryId(), categoryTest.getCategoryId());
+        assertEquals(category.getCname(), categoryTest.getCname());
     }
 }
