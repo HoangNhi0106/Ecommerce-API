@@ -3,15 +3,22 @@ package com.nashtech.ecommerceapi.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CategoryDTO {
-    private long categoryId;
+public class AccountDTO {
+    private long accountId;
 
-    private String cname;
+    private String firstname;
+
+    private String lastname;
+
+    private String username;
+
+    private String email;
+
+    private String phone;
 
     private LocalDateTime createdIn;
 
