@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service.impl;
 
+import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.repository.RatingRepository;
 import com.nashtech.ecommerceapi.service.RatingService;
@@ -13,7 +14,7 @@ public class RatingServiceImpl implements RatingService {
     @Autowired
     private RatingRepository ratingRepository;
 
-    public List<Rating> getAllRating() {
+    public List<Rating> getAllRatings() {
         return ratingRepository.findAll();
     }
 
@@ -27,5 +28,9 @@ public class RatingServiceImpl implements RatingService {
 
     public void deleteRating(Long ratingId) {
         ratingRepository.deleteById(ratingId);
+    }
+
+    public List<Rating> getRatingByProduct(Product product) {
+        return ratingRepository.findAllByProduct(product);
     }
 }

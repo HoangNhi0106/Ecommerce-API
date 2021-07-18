@@ -21,7 +21,7 @@ public class ProductDTOUnitTest {
         Category category = new Category();
         category.setCategoryId(1);
         category.setCname("xyz");
-        product.setProduct_id(1);
+        product.setProductId(1);
         product.setPname("abc");
         product.setCategory(category);
         product.setAmount(50);
@@ -31,7 +31,7 @@ public class ProductDTOUnitTest {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         productDTO.setCategoryName(product.getCategory().getCname());
 
-        assertEquals(product.getProduct_id(), productDTO.getProductId());
+        assertEquals(product.getProductId(), productDTO.getProductId());
         assertEquals(product.getPname(), productDTO.getPname());
         assertEquals(product.getCategory().getCname(), productDTO.getCategoryName());
         assertEquals(product.getPrice(), productDTO.getPrice());
@@ -53,7 +53,7 @@ public class ProductDTOUnitTest {
         category.setCname(productDTO.getCategoryName());
         product.setCategory(category);
 
-        assertEquals(product.getProduct_id(), productDTO.getProductId());
+        assertEquals(product.getProductId(), productDTO.getProductId());
         assertEquals(product.getPname(), productDTO.getPname());
         assertEquals(product.getCategory().getCname(), productDTO.getCategoryName());
         assertEquals(product.getPrice(), productDTO.getPrice());

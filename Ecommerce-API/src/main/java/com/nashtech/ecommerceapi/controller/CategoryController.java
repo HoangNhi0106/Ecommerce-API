@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class CategoryController {
     public ResponseEntity<ResponseDTO> findAllCategory() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            List<Category> categories = categoryService.getAllCategory();
+            List<Category> categories = categoryService.getAllCategories();
             if (categories != null) {
                 for (Category category : categories) {
                     responseDTO.setData(categoryConverter.convertToDto(category));
@@ -67,12 +68,32 @@ public class CategoryController {
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Category category = categoryConverter.convertToEntity(categoryDTO);
+            category.setCreatedIn(LocalDateTime.now());
             Category saveCategory = categoryService.addCategory(category);
             if (saveCategory != null) {
+                responseDTO.setData(categoryConverter.convertToDto(category));
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_SAVED);
+            }
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_CATEGORY_NOT_SAVED);
+            throw new CategoryException(ErrorCode.ERROR_CATEGORY_NOT_SAVED);
+        }
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @PutMapping(value = "/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Category category = categoryConverter.convertToEntity(categoryDTO);
+            category.setUpdatedIn(LocalDateTime.now());
+            categoryService.updateCategory(category);
+            if (category != null) {
                 responseDTO.setData(categoryConverter.convertToDto(category));
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_SAVED);
             }

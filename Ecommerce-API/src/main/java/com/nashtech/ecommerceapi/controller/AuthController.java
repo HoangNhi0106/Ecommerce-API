@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -82,6 +83,7 @@ public class AuthController {
         Account account = new Account();
         account.setUsername(signUpRequest.getUsername());
         account.setEmail(signUpRequest.getEmail());
+        account.setCreatedIn(LocalDateTime.now());
         account.setPassword(encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();

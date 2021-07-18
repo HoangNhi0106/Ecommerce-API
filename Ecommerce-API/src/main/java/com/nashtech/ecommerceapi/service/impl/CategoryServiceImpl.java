@@ -14,7 +14,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategory() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
@@ -28,5 +28,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category addCategory(Category category) {
         return categoryRepository.save(category);
+    }
+
+    public void updateCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 }

@@ -5,7 +5,7 @@ import com.nashtech.ecommerceapi.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> getAllProduct();
+    public List<Product> getAllProducts();
 
     public Product getProductById(Long productId);
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accountId", unique = true)
+    @Column(name = "account_id", unique = true)
     private long accountId;
 
     @Column(name = "firstname")
@@ -39,15 +40,15 @@ public class Account {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "createdIn")
-    private String createdIn;
+    @Column(name = "created_in")
+    private LocalDateTime createdIn;
 
-    @Column(name = "updatedIn")
-    private String updatedIn;
+    @Column(name = "updated_in")
+    private LocalDateTime updatedIn;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "account_role",
-            joinColumns = @JoinColumn(name = "accountId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId"))
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 }

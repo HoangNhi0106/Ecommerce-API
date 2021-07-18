@@ -8,7 +8,6 @@ import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.exception.RatingException;
-import com.nashtech.ecommerceapi.repository.ProductRepository;
 import com.nashtech.ecommerceapi.service.ProductService;
 import com.nashtech.ecommerceapi.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,11 +38,13 @@ public class RatingController {
     public ResponseEntity<ResponseDTO> findAllRating() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            List<Rating> ratings = ratingService.getAllRating();
-            if (ratings != null) {
+            List<Rating> ratings = ratingService.getAllRatings();
+            List<RatingDTO> ratingDTOs = new ArrayList<>();
+            if (ratings.size() != 0) {
                 for (Rating rating : ratings) {
-                    responseDTO.setData(ratingConverter.convertToDto(rating));
+                    ratingDTOs.add(ratingConverter.convertToDto(rating));
                 }
+                responseDTO.setData(ratingDTOs);
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
             }
         } catch (Exception exception) {
@@ -53,10 +56,11 @@ public class RatingController {
 
     @PostMapping(value = "/save")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody RatingDTO ratingDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody RatingDTO ratingDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Rating rating = ratingConverter.convertToEntity(ratingDTO);
+            rating.setDate(LocalDateTime.now());
             Rating saveRating = ratingService.addRating(rating);
             if (saveRating != null) {
                 responseDTO.setData(ratingConverter.convertToDto(rating));
@@ -83,7 +87,7 @@ public class RatingController {
                 responseDTO.setData(true);
                 responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
 
-                Product product = productService.getProductById(rating.getProduct().getProduct_id());
+                Product product = productService.getProductById(rating.getProduct().getProductId());
                 ratingService.deleteRating(ratingId);
                 product.setRating(productService.calculateRatingStar(product));
                 productService.updateProduct(product);

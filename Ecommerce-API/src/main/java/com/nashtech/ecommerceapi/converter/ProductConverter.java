@@ -1,9 +1,7 @@
 package com.nashtech.ecommerceapi.converter;
 
 import com.nashtech.ecommerceapi.dto.ProductDTO;
-import com.nashtech.ecommerceapi.dto.RatingDTO;
 import com.nashtech.ecommerceapi.entity.Product;
-import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +19,14 @@ public class ProductConverter {
 
     public ProductDTO convertToDto(Product product) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        productDTO.setProductId(product.getProductId());
         productDTO.setCategoryName(product.getCategory().getCname());
         return productDTO;
     }
 
     public Product convertToEntity(ProductDTO productDTO) throws ParseException {
         Product product = modelMapper.map(productDTO, Product.class);
-        //product.setCategory(categoryService.getCategoryByName(productDTO.getCategory_name()));
+        product.setCategory(categoryService.getCategoryByName(productDTO.getCategoryName()));
         return product;
     }
 }

@@ -23,7 +23,8 @@ public class RatingConverter {
 
     public RatingDTO convertToDto(Rating rating) {
         RatingDTO ratingDTO = modelMapper.map(rating, RatingDTO.class);
-        ratingDTO.setProductId(rating.getProduct().getProduct_id());
+        ratingDTO.setRatingId(rating.getRatingId());
+        ratingDTO.setProductId(rating.getProduct().getProductId());
         ratingDTO.setAccountId(rating.getAccount().getAccountId());
         return ratingDTO;
     }
