@@ -11,4 +11,7 @@ public class SuccessCode {
 
     public static final String SUCCESS_RATING_FOUND = "SUCCESS_RATING_FOUND";
     public static final String SUCCESS_RATING_SAVED = "SUCCESS_RATING_SAVED";
+
+    public static final String SUCCESS_IMAGE_FOUND = "SUCCESS_IMAGE_FOUND";
+    public static final String SUCCESS_IMAGE_SAVED = "SUCCESS_IMAGE_SAVED";
 }

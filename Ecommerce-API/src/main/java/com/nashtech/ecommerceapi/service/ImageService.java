@@ -9,7 +9,7 @@ import java.util.List;
 public interface ImageService {
     public void saveImage(MultipartFile file) throws IOException;
 
-    public Image getImageById(long image_id);
+    public Image getImageById(String image_id);
 
     public List<Image> getAllImages();
 }

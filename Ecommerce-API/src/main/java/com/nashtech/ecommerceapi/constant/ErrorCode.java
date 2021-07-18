@@ -11,4 +11,7 @@ public class ErrorCode {
 
     public static final String ERROR_RATING_NOT_FOUND = "ERROR_RATING_NOT_FOUND";
     public static final String ERROR_RATING_NOT_SAVED = "ERROR_RATING_NOT_SAVED";
+
+    public static final String ERROR_IMAGE_NOT_FOUND = "ERROR_IMAGE_NOT_FOUND";
+    public static final String ERROR_IMAGE_NOT_SAVED = "ERROR_IMAGE_NOT_SAVED";
 }

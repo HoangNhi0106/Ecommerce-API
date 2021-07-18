@@ -15,7 +15,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public Image getImageById(long image_id) {
+    public Image getImageById(String image_id) {
         return imageRepository.findById(image_id).get();
     }
 
@@ -25,7 +25,9 @@ public class ImageServiceImpl implements ImageService {
 
     public void saveImage(MultipartFile file) throws IOException {
         Image image = new Image();
+        image.setContentType(file.getContentType());
         image.setData(file.getBytes());
+        image.setSize(file.getSize());
 
         imageRepository.save(image);
     }

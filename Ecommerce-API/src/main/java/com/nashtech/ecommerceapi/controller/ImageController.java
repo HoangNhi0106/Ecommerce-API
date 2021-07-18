@@ -8,6 +8,8 @@ import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Image;
 import com.nashtech.ecommerceapi.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +39,10 @@ public class ImageController {
             }
             if (imageDTOs != null) {
                 responseDTO.setData(imageDTOs);
-                responseDTO.setSuccessCode("yes");
+                responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_FOUND);
             }
         } catch (Exception exception) {
-            responseDTO.setErrorCode("no");
+            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_FOUND);
         }
         return ResponseEntity.ok().body(responseDTO);
     }
@@ -53,11 +55,29 @@ public class ImageController {
             imageService.saveImage(file);
 
             responseDTO.setData(true);
-            responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_SAVED);
+            responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_SAVED);
         } catch (Exception e) {
             responseDTO.setData(false);
-            responseDTO.setErrorCode(ErrorCode.ERROR_PRODUCT_NOT_SAVED);
+            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_SAVED);
         }
         return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("{image_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<ResponseDTO> getFile(@PathVariable String image_id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Image image = imageService.getImageById(image_id);
+            responseDTO.setData(image);
+            responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_FOUND);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; imageId=\"" + image.getImageId() + "\"")
+                    .contentType(MediaType.valueOf(image.getContentType()))
+                    .body(responseDTO);
+        } catch (Exception exception) {
+            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_FOUND);
+            return ResponseEntity.ok().body(responseDTO);
+        }
     }
 }
