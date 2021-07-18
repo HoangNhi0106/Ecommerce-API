@@ -65,19 +65,15 @@ public class ImageController {
 
     @GetMapping("{image_id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<ResponseDTO> getFile(@PathVariable String image_id) {
-        ResponseDTO responseDTO = new ResponseDTO();
+    public ResponseEntity<byte[]> getFile(@PathVariable String image_id) {
         try {
             Image image = imageService.getImageById(image_id);
-            responseDTO.setData(image);
-            responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_FOUND);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; imageId=\"" + image.getImageId() + "\"")
                     .contentType(MediaType.valueOf(image.getContentType()))
-                    .body(responseDTO);
+                    .body(image.getData());
         } catch (Exception exception) {
-            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_FOUND);
-            return ResponseEntity.ok().body(responseDTO);
+            return ResponseEntity.notFound().build();
         }
     }
 }
