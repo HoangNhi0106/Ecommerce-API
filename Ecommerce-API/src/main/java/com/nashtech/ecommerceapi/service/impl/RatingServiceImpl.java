@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service.impl;
 
+import com.nashtech.ecommerceapi.entity.Account;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.repository.RatingRepository;
@@ -32,5 +33,9 @@ public class RatingServiceImpl implements RatingService {
 
     public List<Rating> getRatingByProduct(Product product) {
         return ratingRepository.findAllByProduct(product);
+    }
+
+    public List<Rating> getRatingByAccount(Account account) {
+        return ratingRepository.findAllByAccount(account);
     }
 }

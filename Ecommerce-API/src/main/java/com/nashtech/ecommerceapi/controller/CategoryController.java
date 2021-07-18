@@ -4,20 +4,16 @@ import com.nashtech.ecommerceapi.constant.ErrorCode;
 import com.nashtech.ecommerceapi.constant.SuccessCode;
 import com.nashtech.ecommerceapi.converter.CategoryConverter;
 import com.nashtech.ecommerceapi.dto.CategoryDTO;
-import com.nashtech.ecommerceapi.dto.ProductDTO;
 import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Category;
-import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.CategoryException;
 import com.nashtech.ecommerceapi.service.CategoryService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 

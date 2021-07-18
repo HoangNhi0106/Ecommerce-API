@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service;
 
+import com.nashtech.ecommerceapi.entity.Account;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 
@@ -15,4 +16,6 @@ public interface RatingService {
     public void deleteRating(Long ratingId);
 
     public List<Rating> getRatingByProduct(Product product);
+
+    public List<Rating> getRatingByAccount(Account account);
 }
