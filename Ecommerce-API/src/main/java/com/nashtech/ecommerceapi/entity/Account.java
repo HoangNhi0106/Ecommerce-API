@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,15 +30,18 @@ public class Account {
     @Column(name = "lastname")
     private String lastname;
 
+    @Size(min = 5, max = 20)
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Size(min = 6, max = 15)
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "email")
     private String email;
 
+    @Size(min = 10, max = 12)
     @Column(name = "phone")
     private String phone;
 

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,6 +29,8 @@ public class Rating {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @Min(value = 0, message = "The star must be a positive ingeter")
+    @Max(value = 5, message = "Maximum star is 5")
     @Column(name = "star", nullable = false)
     private float star;
 }

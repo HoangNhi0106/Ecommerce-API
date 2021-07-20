@@ -19,7 +19,7 @@ public class Image {
 
     @Lob
     @Type(type="org.hibernate.type.BinaryType")
-    @Column(name = "data", length = Integer.MAX_VALUE)
+    @Column(name = "data", length = Integer.MAX_VALUE, nullable = false)
     private byte[] data;
 
     @Column(name = "content_type")

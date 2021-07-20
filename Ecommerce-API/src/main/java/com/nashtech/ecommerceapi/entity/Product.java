@@ -1,10 +1,11 @@
 package com.nashtech.ecommerceapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,12 +28,15 @@ public class Product {
     @Column(name = "amount")
     private int amount;
 
+    @Min(value = 0)
     @Column(name = "sold")
     private int sold;
 
     @Column(name = "price")
     private long price;
 
+    @Min(value = 0, message = "The star must be a positive ingeter")
+    @Max(value = 5, message = "Maximum star is 5")
     @Column(name = "rating_star")
     private Float rating;
 
