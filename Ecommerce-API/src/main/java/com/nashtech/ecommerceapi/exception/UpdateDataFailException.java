@@ -9,6 +9,6 @@ public class UpdateDataFailException extends Exception {
     private static final long serialVersionUID = 4L;
 
     public UpdateDataFailException(String message){
-        super( message);
+        super(message);
     }
 }
