@@ -25,6 +25,7 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Min(value = 0)
     @Column(name = "amount")
     private int amount;
 
@@ -32,6 +33,7 @@ public class Product {
     @Column(name = "sold")
     private int sold;
 
+    @Min(value = 0)
     @Column(name = "price")
     private long price;
 

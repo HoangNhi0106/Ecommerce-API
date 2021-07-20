@@ -6,6 +6,7 @@ import com.nashtech.ecommerceapi.converter.AccountConverter;
 import com.nashtech.ecommerceapi.dto.AccountDTO;
 import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Account;
+import com.nashtech.ecommerceapi.exception.AccountException;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.exception.ProductException;
 import com.nashtech.ecommerceapi.service.AccountService;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.AccountException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -43,13 +43,14 @@ public class AccountController {
             }
         } catch (Exception exception) {
             responseDTO.setErrorCode(ErrorCode.ERROR_LOAD_USER);
+            throw new AccountException(ErrorCode.ERROR_LOAD_USER);
         }
         return ResponseEntity.ok().body(responseDTO);
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<ResponseDTO> updateAccount(@Valid @RequestBody AccountDTO accountDTO) throws AccountException {
+    public ResponseEntity<ResponseDTO> updateAccount(@Valid @RequestBody AccountDTO accountDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             Account account = accountConverter.convertToEntity(accountDTO);
@@ -86,7 +87,7 @@ public class AccountController {
         } catch (Exception exception) {
             responseDTO.setData(false);
             responseDTO.setErrorCode(ErrorCode.ERROR_LOAD_USER);
-            throw new ProductException(ErrorCode.ERROR_LOAD_USER);
+            throw new AccountException(ErrorCode.ERROR_LOAD_USER);
         }
         return ResponseEntity.ok().body(responseDTO);
     }

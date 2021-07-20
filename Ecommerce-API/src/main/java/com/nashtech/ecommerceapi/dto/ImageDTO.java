@@ -7,7 +7,10 @@ import lombok.Setter;
 @Setter
 public class ImageDTO {
     private String imageId;
+
     private String url;
+
     private String contentType;
+
     private Long size;
 }
