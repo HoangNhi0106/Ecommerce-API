@@ -1,9 +1,7 @@
 package com.nashtech.ecommerceapi.converter;
 
 import com.nashtech.ecommerceapi.dto.AccountDTO;
-import com.nashtech.ecommerceapi.dto.CategoryDTO;
 import com.nashtech.ecommerceapi.entity.Account;
-import com.nashtech.ecommerceapi.entity.Category;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

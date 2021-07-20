@@ -33,4 +33,7 @@ public class Rating {
     @Max(value = 5, message = "Maximum star is 5")
     @Column(name = "star", nullable = false)
     private float star;
+
+    @Column(name = "comment")
+    private String comment;
 }
