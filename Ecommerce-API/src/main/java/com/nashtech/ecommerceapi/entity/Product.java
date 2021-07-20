@@ -9,7 +9,11 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "product")
+@Table(name = "product",
+        indexes = {
+        @Index(name = "product_idx" , columnList = "product_id , pname"),
+        @Index(name = "product_categoryId_idx" , columnList = "category_id")
+    })
 @Getter
 @Setter
 public class Product {

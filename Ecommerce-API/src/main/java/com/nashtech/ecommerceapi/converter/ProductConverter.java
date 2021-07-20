@@ -2,6 +2,7 @@ package com.nashtech.ecommerceapi.converter;
 
 import com.nashtech.ecommerceapi.dto.ProductDTO;
 import com.nashtech.ecommerceapi.entity.Product;
+import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ProductConverter {
         return productDTO;
     }
 
-    public Product convertToEntity(ProductDTO productDTO) throws ParseException {
+    public Product convertToEntity(ProductDTO productDTO) throws DataNotFoundException {
         Product product = modelMapper.map(productDTO, Product.class);
         product.setCategory(categoryService.getCategoryByName(productDTO.getCategoryName()));
         return product;

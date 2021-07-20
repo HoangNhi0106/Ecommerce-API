@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 public class AccountDTO {
     private long accountId;
 
+    @NotBlank
     private String firstname;
 
+    @NotBlank
     private String lastname;
 
     @NotBlank
@@ -22,11 +24,15 @@ public class AccountDTO {
     private String username;
 
     @Email
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String phone;
 
+    @NotBlank
     private LocalDateTime createdIn;
 
+    @NotBlank
     private LocalDateTime updatedIn;
 }

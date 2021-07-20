@@ -20,10 +20,10 @@ public class CategoryRepositoryTest {
     public void findCategoryByName_thenSuccess() {
         Category category = new Category();
         category.setCategoryId(1);
-        category.setCname("mobile");
+        category.setCname("toner");
         assertNotNull(categoryRepository.save(category));
 
-        Category categoryTest = categoryRepository.findCategoryByCname(category.getCname());
+        Category categoryTest = categoryRepository.findCategoryByCname(category.getCname()).get();
 
         assertNotNull(categoryTest);
 

@@ -2,6 +2,8 @@ package com.nashtech.ecommerceapi.service;
 
 import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
+import com.nashtech.ecommerceapi.exception.CreateDataFailException;
+import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class ProductServiceTest {
     ProductService productService;
 
     @Test
-    public void addProduct_thenSuccess() {
+    public void addProduct_thenSuccess() throws CreateDataFailException {
         Product product = new Product();
         Category category = new Category();
         category.setCategoryId(1l);
@@ -38,7 +40,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void getProductById_thenSuccess() {
+    public void getProductById_thenSuccess() throws DataNotFoundException {
         Product product = productService.getProductById(1l);
 
         assertEquals(1, product.getProductId());

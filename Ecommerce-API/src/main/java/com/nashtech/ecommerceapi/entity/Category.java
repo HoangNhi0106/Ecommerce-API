@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "category",
+        indexes = { @Index(name = "category_idx" , columnList = "category_id , cname") })
 @Getter
 @Setter
 public class Category {
