@@ -27,7 +27,7 @@ public class CategoryController {
     private CategoryConverter categoryConverter;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findAllCategory() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -46,7 +46,7 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/{cname}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findCategoryByName(@PathVariable String cname) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {

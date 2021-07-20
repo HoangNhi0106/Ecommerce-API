@@ -28,7 +28,7 @@ public class ImageController {
     private ImageConverter imageConverter;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findAllImages() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {

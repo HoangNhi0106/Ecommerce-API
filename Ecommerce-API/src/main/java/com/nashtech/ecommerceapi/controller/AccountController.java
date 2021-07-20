@@ -32,7 +32,7 @@ public class AccountController {
     private RatingService ratingService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findAccountById(@PathVariable Long id) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {

@@ -34,7 +34,7 @@ public class ProductController {
     private RatingService ratingService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findAllProduct() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
@@ -55,7 +55,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {

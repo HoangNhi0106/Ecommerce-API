@@ -34,7 +34,7 @@ public class RatingController {
     private ProductService productService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ResponseDTO> findAllRating() {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
