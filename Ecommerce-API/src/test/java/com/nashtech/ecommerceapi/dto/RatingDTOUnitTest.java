@@ -31,7 +31,7 @@ public class RatingDTOUnitTest {
         rating.setProduct(product);
         rating.setAccount(account);
         rating.setDate(LocalDateTime.now());
-        rating.setStar((float) 4.0);
+        rating.setStar(4);
 
         RatingDTO ratingDTO = modelMapper.map(rating, RatingDTO.class);
 
@@ -46,7 +46,7 @@ public class RatingDTOUnitTest {
         RatingDTO ratingDTO = new RatingDTO();
         ratingDTO.setAccountId(1);
         ratingDTO.setProductId(1);
-        ratingDTO.setStar((float) 4.0);
+        ratingDTO.setStar(4);
 
         Rating rating = modelMapper.map(ratingDTO, Rating.class);
         assertEquals(rating.getRatingId(), ratingDTO.getRatingId());

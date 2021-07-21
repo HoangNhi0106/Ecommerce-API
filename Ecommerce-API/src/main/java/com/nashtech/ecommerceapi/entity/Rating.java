@@ -36,7 +36,7 @@ public class Rating {
     @Min(value = 0, message = "The star must be a positive ingeter")
     @Max(value = 5, message = "Maximum star is 5")
     @Column(name = "star", nullable = false)
-    private float star;
+    private int star;
 
     @Column(name = "comment")
     private String comment;

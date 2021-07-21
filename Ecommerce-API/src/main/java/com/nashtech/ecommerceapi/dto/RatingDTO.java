@@ -23,7 +23,7 @@ public class RatingDTO {
 
     @Min(value = 0, message = "The star must be a positive ingeter")
     @Max(value = 5, message = "Maximum star is 5")
-    private float star;
+    private int star;
 
     private String comment;
 }
