@@ -9,15 +9,12 @@ import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/public")
 public class PublicController {
@@ -98,11 +95,24 @@ public class PublicController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    @GetMapping(value = "/product/{id}")
+    @GetMapping(value = "/product/product={id}")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) throws DataNotFoundException {
         ResponseDTO responseDTO = new ResponseDTO();
         Product product = productService.getProductById(id);
         responseDTO.setData(productConverter.convertToDto(product));
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping(value = "/product/category={cname}")
+    private ResponseEntity<ResponseDTO> findAllProductByCname(@PathVariable String cname) throws DataNotFoundException {
+        ResponseDTO responseDTO =  new ResponseDTO();
+        Category category = categoryService.getCategoryByName(cname);
+        List<ProductDTOItem> productDTOItems = new ArrayList<>();
+        List<Product> products = category.getProducts();
+        for (Product product : products)
+            productDTOItems.add(productConverter.convertToDtoItem(product));
+        responseDTO.setData(productDTOItems);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
         return ResponseEntity.ok().body(responseDTO);
     }
@@ -117,6 +127,20 @@ public class PublicController {
             ratingDTOs.add(ratingConverter.convertToDto(rating));
         }
         responseDTO.setData(ratingDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/rating/product={id}")
+    public ResponseEntity<ResponseDTO> findRatingByProduct(@PathVariable Long id) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Product product = productService.getProductById(id);
+        List<Rating> ratings = ratingService.getRatingByProduct(product);
+        List<RatingDTOReview> ratingDTOReviews = new ArrayList<>();
+        for (Rating rating : ratings) {
+            ratingDTOReviews.add(ratingConverter.convertToDtoReview(rating));
+        }
+        responseDTO.setData(ratingDTOReviews);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
         return ResponseEntity.ok().body(responseDTO);
     }

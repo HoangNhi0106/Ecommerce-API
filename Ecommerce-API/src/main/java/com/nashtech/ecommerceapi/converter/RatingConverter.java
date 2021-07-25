@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.converter;
 
 import com.nashtech.ecommerceapi.dto.RatingDTO;
+import com.nashtech.ecommerceapi.dto.RatingDTOReview;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.repository.AccountRepository;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
@@ -34,5 +35,12 @@ public class RatingConverter {
         rating.setAccount(accountRepository.getById(ratingDTO.getAccountId()));
         rating.setProduct(productRepository.getById(ratingDTO.getProductId()));
         return rating;
+    }
+
+    public RatingDTOReview convertToDtoReview(Rating rating) {
+        RatingDTOReview ratingDTOReview = modelMapper.map(rating, RatingDTOReview.class);
+        ratingDTOReview.setRatingId(rating.getRatingId());
+        ratingDTOReview.setAccountUsername(rating.getAccount().getUsername());
+        return ratingDTOReview;
     }
 }

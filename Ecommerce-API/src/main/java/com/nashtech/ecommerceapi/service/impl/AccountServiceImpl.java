@@ -52,7 +52,11 @@ public class AccountServiceImpl implements AccountService {
             Account currentAccount = getAccountByUsername(getCurrentUsername());
             if (!account.getUsername().equals(currentAccount.getUsername()))
                 throw new UserAuthenticationException(ErrorCode.ERROR_USER_AUTHENTICATION);
+            account.setAccountId(currentAccount.getAccountId());
             account.setUpdatedIn(LocalDateTime.now());
+            account.setRoles(currentAccount.getRoles());
+            account.setPassword(currentAccount.getPassword());
+            account.setCreatedIn(currentAccount.getCreatedIn());
             accountRepository.save(account);
         }catch(Exception ex){
             throw new UpdateDataFailException(ErrorCode.ERROR_USER_NOT_UPDATED);

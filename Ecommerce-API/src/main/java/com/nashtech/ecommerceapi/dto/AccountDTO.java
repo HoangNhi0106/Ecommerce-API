@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.dto;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,26 +14,24 @@ import java.time.LocalDateTime;
 public class AccountDTO {
     private long accountId;
 
-    @NotBlank
+    @NotNull
     private String firstname;
 
-    @NotBlank
+    @NotNull
     private String lastname;
 
-    @NotBlank
     @Size(min = 3, max = 20)
+    @NotNull
     private String username;
 
     @Email
-    @NotBlank
+    @NotNull
     private String email;
 
-    @NotBlank
+    @NotNull
     private String phone;
 
-    @NotBlank
     private LocalDateTime createdIn;
 
-    @NotBlank
     private LocalDateTime updatedIn;
 }

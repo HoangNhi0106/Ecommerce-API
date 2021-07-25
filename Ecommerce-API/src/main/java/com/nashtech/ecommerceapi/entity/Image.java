@@ -15,6 +15,7 @@ public class Image {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "image_id")
     private String imageId;
 
     @Lob

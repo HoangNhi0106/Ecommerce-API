@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.controller;
 
 import com.nashtech.ecommerceapi.constant.ERole;
+import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Account;
 import com.nashtech.ecommerceapi.entity.Role;
 import com.nashtech.ecommerceapi.jwt.JwtUtils;
@@ -48,8 +49,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -62,7 +62,7 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         JwtResponse jwtResponse = new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
-        return ResponseEntity.ok().body(jwtResponse);
+        return ResponseEntity.ok(jwtResponse);
     }
 
     @PostMapping("/signup")
