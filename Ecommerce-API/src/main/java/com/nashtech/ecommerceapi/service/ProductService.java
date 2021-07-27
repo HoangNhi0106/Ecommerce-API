@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service;
 
+import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
@@ -12,6 +13,10 @@ public interface ProductService {
     public List<Product> getAllProducts() throws DataNotFoundException;
 
     public Product getProductById(Long productId) throws DataNotFoundException;
+
+    public List<Product> getAllSortById();
+
+    public List<Product> getProductByCategory(Category category);
 
     public Product addProduct(Product product) throws CreateDataFailException;
 

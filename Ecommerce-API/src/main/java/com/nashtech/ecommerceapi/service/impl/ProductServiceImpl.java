@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.service.impl;
 
 import com.nashtech.ecommerceapi.constant.ErrorCode;
+import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
@@ -27,10 +28,10 @@ public class ProductServiceImpl implements ProductService {
     private RatingService ratingService;
 
 
-    public List<Product> getAllProducts() throws DataNotFoundException {
+    public List<Product> getAllProducts()  {
         List<Product> products = productRepository.findAll();
         if (products.isEmpty())
-            throw new DataNotFoundException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+            return null;
         else
             return products;
     }
@@ -41,6 +42,11 @@ public class ProductServiceImpl implements ProductService {
             return optionalProduct.get();
         else
             throw new DataNotFoundException(ErrorCode.ERROR_PRODUCT_NOT_FOUND);
+    }
+
+    public List<Product> getProductByCategory(Category category) {
+        List<Product> products = productRepository.findAllByCategory(category);
+        return products;
     }
 
     public Product addProduct(Product product) throws CreateDataFailException {
@@ -56,8 +62,9 @@ public class ProductServiceImpl implements ProductService {
         try {
             Product product = getProductById(productId);
             List<Rating> ratings = ratingService.getRatingByProduct(product);
-            for (Rating rating : ratings)
-                ratingService.deleteRating(rating.getRatingId());
+            if (ratings != null)
+                for (Rating rating : ratings)
+                    ratingService.deleteRating(rating.getRatingId());
             productRepository.deleteById(productId);
         } catch (Exception e) {
             throw new DeleteDataFailException(ErrorCode.ERROR_PRODUCT_NOT_DELETED);
@@ -67,9 +74,14 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProduct(Product product) throws UpdateDataFailException {
         try {
-            product.setRating(calculateRatingStar(product));
-            product.setUpdatedIn(LocalDateTime.now());
-            productRepository.save(product);
+            Product currentProduct = productRepository.getById(product.getProductId());
+            currentProduct.setPname(product.getPname());
+            currentProduct.setCategory(product.getCategory());
+            currentProduct.setPrice(product.getPrice());
+            currentProduct.setAmount(product.getAmount());
+            currentProduct.setUpdatedIn(LocalDateTime.now());
+            calculateRatingStar(currentProduct);
+            productRepository.save(currentProduct);
         } catch (Exception e) {
             throw new UpdateDataFailException(ErrorCode.ERROR_PRODUCT_NOT_UPDATED);
         }
@@ -79,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
     public Float calculateRatingStar(Product product) throws DataNotFoundException {
         List<Rating> ratings = ratingService.getRatingByProduct(product);
         if (ratings.isEmpty())
-            throw new DataNotFoundException(ErrorCode.ERROR_RATING_NOT_FOUND);
+            return null;
         if (ratings.size() != 0) {
             Float star = (float) 0;
             for (Rating rating : ratings) {
@@ -89,6 +101,13 @@ public class ProductServiceImpl implements ProductService {
         } else {
             return (float) 0;
         }
+    }
+
+    public List<Product> getAllSortById() {
+        List<Product> products = productRepository.findByOrderByProductIdAsc();
+        if (products.isEmpty())
+            return null;
+        else return products;
     }
 
 }

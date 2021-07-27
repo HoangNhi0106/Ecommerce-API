@@ -26,10 +26,10 @@ public class RatingServiceImpl implements RatingService {
     @Autowired
     private ProductService productService;
 
-    public List<Rating> getAllRatings() throws DataNotFoundException {
+    public List<Rating> getAllRatings(){
         List<Rating> ratings = ratingRepository.findAll();
         if (ratings.isEmpty())
-            throw new DataNotFoundException(ErrorCode.ERROR_RATING_NOT_FOUND);
+            return null;
         return ratings;
     }
 
@@ -58,28 +58,29 @@ public class RatingServiceImpl implements RatingService {
 
     public void deleteRating(Long ratingId) throws DeleteDataFailException {
         try {
-            ratingRepository.deleteById(ratingId);
             //update product rating
             Rating rating = getRatingById(ratingId);
             Product product = productService.getProductById(rating.getProduct().getProductId());
             productService.updateProduct(product);
+            //delete
+            ratingRepository.deleteById(ratingId);
         } catch (Exception e) {
             throw new DeleteDataFailException(ErrorCode.ERROR_RATING_NOT_DELETED);
         }
 
     }
 
-    public List<Rating> getRatingByProduct(Product product) throws DataNotFoundException {
+    public List<Rating> getRatingByProduct(Product product) {
         List<Rating> ratings = ratingRepository.findAllByProduct(product);
         if (ratings.isEmpty())
-            throw new DataNotFoundException(ErrorCode.ERROR_RATING_NOT_FOUND);
+            return null;
         return ratings;
     }
 
-    public List<Rating> getRatingByAccount(Account account) throws DataNotFoundException {
+    public List<Rating> getRatingByAccount(Account account) {
         List<Rating> ratings = ratingRepository.findAllByAccount(account);
         if (ratings.isEmpty())
-            throw new DataNotFoundException(ErrorCode.ERROR_RATING_NOT_FOUND);
+            return null;
         return ratings;
     }
 }

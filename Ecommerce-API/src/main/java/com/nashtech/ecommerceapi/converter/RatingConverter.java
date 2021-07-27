@@ -1,7 +1,8 @@
 package com.nashtech.ecommerceapi.converter;
 
-import com.nashtech.ecommerceapi.dto.RatingDTO;
+import com.nashtech.ecommerceapi.dto.RatingDTOPost;
 import com.nashtech.ecommerceapi.dto.RatingDTOReview;
+import com.nashtech.ecommerceapi.dto.RatingDTOShow;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.repository.AccountRepository;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
@@ -22,18 +23,18 @@ public class RatingConverter {
     @Autowired
     private ModelMapper modelMapper;
 
-    public RatingDTO convertToDto(Rating rating) {
-        RatingDTO ratingDTO = modelMapper.map(rating, RatingDTO.class);
-        ratingDTO.setRatingId(rating.getRatingId());
-        ratingDTO.setProductId(rating.getProduct().getProductId());
-        ratingDTO.setAccountId(rating.getAccount().getAccountId());
-        return ratingDTO;
+    public RatingDTOPost convertToDto(Rating rating) {
+        RatingDTOPost ratingDTOPost = modelMapper.map(rating, RatingDTOPost.class);
+        ratingDTOPost.setRatingId(rating.getRatingId());
+        ratingDTOPost.setProductId(rating.getProduct().getProductId());
+        ratingDTOPost.setAccountId(rating.getAccount().getAccountId());
+        return ratingDTOPost;
     }
 
-    public Rating convertToEntity(RatingDTO ratingDTO) throws ParseException {
-        Rating rating = modelMapper.map(ratingDTO, Rating.class);
-        rating.setAccount(accountRepository.getById(ratingDTO.getAccountId()));
-        rating.setProduct(productRepository.getById(ratingDTO.getProductId()));
+    public Rating convertToEntity(RatingDTOPost ratingDTOPost) throws ParseException {
+        Rating rating = modelMapper.map(ratingDTOPost, Rating.class);
+        rating.setAccount(accountRepository.getById(ratingDTOPost.getAccountId()));
+        rating.setProduct(productRepository.getById(ratingDTOPost.getProductId()));
         return rating;
     }
 
@@ -42,5 +43,14 @@ public class RatingConverter {
         ratingDTOReview.setRatingId(rating.getRatingId());
         ratingDTOReview.setAccountUsername(rating.getAccount().getUsername());
         return ratingDTOReview;
+    }
+
+    public RatingDTOShow convertToDtoShow(Rating rating) {
+        RatingDTOShow ratingDTOShow = modelMapper.map(rating, RatingDTOShow.class);
+        ratingDTOShow.setRatingId(rating.getRatingId());
+        ratingDTOShow.setProductId(rating.getProduct().getProductId());
+        ratingDTOShow.setPname(rating.getProduct().getPname());
+        ratingDTOShow.setUsername(rating.getAccount().getUsername());
+        return ratingDTOShow;
     }
 }

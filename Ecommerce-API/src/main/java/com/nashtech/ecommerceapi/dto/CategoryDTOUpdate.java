@@ -1,21 +1,17 @@
 package com.nashtech.ecommerceapi.dto;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class CategoryDTO {
+public class CategoryDTOUpdate {
+    @NotNull
     private long categoryId;
 
+    @NotNull
     private String cname;
 
     private String description;
-
-    private LocalDateTime createdIn;
-
-    private LocalDateTime updatedIn;
 }

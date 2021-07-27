@@ -21,6 +21,9 @@ public class Category {
     @Column(name = "cname", nullable = false)
     private String cname;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> products;
 

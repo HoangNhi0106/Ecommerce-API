@@ -11,7 +11,7 @@ import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
 import java.util.List;
 
 public interface RatingService {
-    public List<Rating> getAllRatings() throws DataNotFoundException;
+    public List<Rating> getAllRatings();
 
     public Rating getRatingById(Long ratingId) throws DataNotFoundException;
 

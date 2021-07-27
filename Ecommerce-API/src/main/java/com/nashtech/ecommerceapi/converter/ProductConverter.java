@@ -1,8 +1,6 @@
 package com.nashtech.ecommerceapi.converter;
 
-import com.nashtech.ecommerceapi.dto.ImageDTO;
-import com.nashtech.ecommerceapi.dto.ProductDTO;
-import com.nashtech.ecommerceapi.dto.ProductDTOItem;
+import com.nashtech.ecommerceapi.dto.*;
 import com.nashtech.ecommerceapi.entity.Image;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
@@ -28,6 +26,11 @@ public class ProductConverter {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         productDTO.setProductId(product.getProductId());
         productDTO.setCategoryName(product.getCategory().getCname());
+        Image image = product.getImage();
+        if (image != null) {
+            ImageDTO imageDTO = imageConverter.convertToDto(image);
+            productDTO.setImage(imageDTO.getUrl());
+        }
         return productDTO;
     }
 
@@ -46,5 +49,31 @@ public class ProductConverter {
             productDTOItem.setImage(imageDTO.getUrl());
         }
         return productDTOItem;
+    }
+
+    public ProductDTOUpdate convertToDtoUpdate(Product product) {
+        ProductDTOUpdate productDTOUpdate = modelMapper.map(product, ProductDTOUpdate.class);
+        productDTOUpdate.setProductId(product.getProductId());
+        productDTOUpdate.setCategoryName(product.getCategory().getCname());
+        return productDTOUpdate;
+    }
+
+    public ProductDTOCreate convertToDtoCreate(Product product) {
+        ProductDTOCreate productDTOCreate = modelMapper.map(product, ProductDTOCreate.class);
+        productDTOCreate.setCategoryName(product.getCategory().getCname());
+        return productDTOCreate;
+    }
+
+    public Product convertToEntityCreate(ProductDTOCreate productDTOCreate) throws DataNotFoundException {
+        Product product = modelMapper.map(productDTOCreate, Product.class);
+        product.setCategory(categoryService.getCategoryByName(productDTOCreate.getCategoryName()));
+        return product;
+    }
+
+    public Product convertToEntityUpdate(ProductDTOUpdate productDTOUpdate) throws DataNotFoundException {
+        Product product = modelMapper.map(productDTOUpdate, Product.class);
+        product.setProductId(productDTOUpdate.getProductId());
+        product.setCategory(categoryService.getCategoryByName(productDTOUpdate.getCategoryName()));
+        return product;
     }
 }

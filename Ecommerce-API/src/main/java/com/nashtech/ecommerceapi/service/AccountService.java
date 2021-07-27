@@ -5,7 +5,11 @@ import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
 import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
 
+import java.util.List;
+
 public interface AccountService {
+    public List<Account> getAllAccount();
+
     public Account getAccountById(Long id);
 
     public String getCurrentUsername();

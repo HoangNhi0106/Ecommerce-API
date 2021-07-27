@@ -66,8 +66,10 @@ public class PublicController {
         ResponseDTO responseDTO = new ResponseDTO();
         List<Category> categories = categoryService.getAllCategories();
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
-        for (Category category : categories)
-            categoryDTOs.add(categoryConverter.convertToDto(category));
+        if (categories != null) {
+            for (Category category : categories)
+                categoryDTOs.add(categoryConverter.convertToDto(category));
+        }
         responseDTO.setData(categoryDTOs);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_CATEGORY_FOUND);
         return ResponseEntity.ok().body(responseDTO);
@@ -83,17 +85,18 @@ public class PublicController {
     }
 
     //ProductController
-    @GetMapping("/product")
+    /*@GetMapping("/product")
     public ResponseEntity<ResponseDTO> findAllProduct() throws DataNotFoundException {
         ResponseDTO responseDTO = new ResponseDTO();
         List<ProductDTO> productDTOs = new ArrayList<>();
         List<Product> products = productService.getAllProducts();
-        for (Product product : products)
-            productDTOs.add(productConverter.convertToDto(product));
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
         responseDTO.setData(productDTOs);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
         return ResponseEntity.ok().body(responseDTO);
-    }
+    }*/
 
     @GetMapping(value = "/product/product={id}")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) throws DataNotFoundException {
@@ -118,18 +121,6 @@ public class PublicController {
     }
 
     //RatingController
-    @GetMapping("/rating")
-    public ResponseEntity<ResponseDTO> findAllRating() throws DataNotFoundException {
-        ResponseDTO responseDTO = new ResponseDTO();
-        List<Rating> ratings = ratingService.getAllRatings();
-        List<RatingDTO> ratingDTOs = new ArrayList<>();
-        for (Rating rating : ratings) {
-            ratingDTOs.add(ratingConverter.convertToDto(rating));
-        }
-        responseDTO.setData(ratingDTOs);
-        responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_FOUND);
-        return ResponseEntity.ok().body(responseDTO);
-    }
 
     @GetMapping("/rating/product={id}")
     public ResponseEntity<ResponseDTO> findRatingByProduct(@PathVariable Long id) throws DataNotFoundException {

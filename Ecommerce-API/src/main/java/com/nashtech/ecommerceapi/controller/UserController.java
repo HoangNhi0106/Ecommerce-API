@@ -5,7 +5,7 @@ import com.nashtech.ecommerceapi.constant.SuccessCode;
 import com.nashtech.ecommerceapi.converter.AccountConverter;
 import com.nashtech.ecommerceapi.converter.RatingConverter;
 import com.nashtech.ecommerceapi.dto.AccountDTO;
-import com.nashtech.ecommerceapi.dto.RatingDTO;
+import com.nashtech.ecommerceapi.dto.RatingDTOPost;
 import com.nashtech.ecommerceapi.dto.ResponseDTO;
 import com.nashtech.ecommerceapi.entity.Account;
 import com.nashtech.ecommerceapi.entity.Image;
@@ -78,10 +78,10 @@ public class UserController {
 
     //RatingController
     @PostMapping(value = "/rating/save")
-    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody RatingDTO ratingDTO) throws DataNotFoundException, CreateDataFailException, UpdateDataFailException, ParseException {
+    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody RatingDTOPost ratingDTOPost) throws DataNotFoundException, CreateDataFailException, UpdateDataFailException, ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
-        Rating rating = ratingConverter.convertToEntity(ratingDTO);
-        Rating saveRating = ratingService.addRating(rating);
+        Rating rating = ratingConverter.convertToEntity(ratingDTOPost);
+        ratingService.addRating(rating);
         responseDTO.setData(ratingConverter.convertToDto(rating));
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_SAVED);
         return ResponseEntity.ok().body(responseDTO);

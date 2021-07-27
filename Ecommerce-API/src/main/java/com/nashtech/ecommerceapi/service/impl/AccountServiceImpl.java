@@ -30,8 +30,18 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private IAuthenticationFacade authenticationFacade;
 
+    public List<Account> getAllAccount() {
+        List<Account> accounts = accountRepository.findAll();
+        if (accounts.isEmpty())
+            return null;
+        else return accounts;
+    }
+
     public Account getAccountById(Long id) {
-        return accountRepository.findById(id).get();
+        Optional<Account> account = accountRepository.findById(id);
+        if (account.isPresent())
+            return account.get();
+        else return null;
     }
 
     public String getCurrentUsername() {
@@ -61,7 +71,6 @@ public class AccountServiceImpl implements AccountService {
         }catch(Exception ex){
             throw new UpdateDataFailException(ErrorCode.ERROR_USER_NOT_UPDATED);
         }
-
     }
 
 
@@ -69,8 +78,9 @@ public class AccountServiceImpl implements AccountService {
         try {
             Account account =getAccountById(id);
             List<Rating> ratings = ratingService.getRatingByAccount(account);
-            for (Rating rating : ratings)
-                ratingService.deleteRating(rating.getRatingId());
+            if (ratings != null)
+                for (Rating rating : ratings)
+                    ratingService.deleteRating(rating.getRatingId());
             accountRepository.deleteById(id);
         } catch (Exception e) {
             throw new DeleteDataFailException(ErrorCode.ERROR_USER_NOT_DELETED);
