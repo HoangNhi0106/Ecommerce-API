@@ -2,6 +2,7 @@ package com.nashtech.ecommerceapi.service.impl;
 
 import com.nashtech.ecommerceapi.constant.ErrorCode;
 import com.nashtech.ecommerceapi.entity.Category;
+import com.nashtech.ecommerceapi.entity.Image;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.entity.Rating;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
@@ -10,6 +11,7 @@ import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
 import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
 import com.nashtech.ecommerceapi.repository.RatingRepository;
+import com.nashtech.ecommerceapi.service.ImageService;
 import com.nashtech.ecommerceapi.service.ProductService;
 import com.nashtech.ecommerceapi.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private RatingService ratingService;
 
+    @Autowired
+    private ImageService imageService;
 
     public List<Product> getAllProducts()  {
         List<Product> products = productRepository.findAll();

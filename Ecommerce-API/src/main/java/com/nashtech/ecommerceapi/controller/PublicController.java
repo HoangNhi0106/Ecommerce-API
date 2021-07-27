@@ -8,6 +8,8 @@ import com.nashtech.ecommerceapi.entity.*;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -154,5 +156,18 @@ public class PublicController {
             responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_FOUND);
         }
         return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/image/{image_id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String image_id) {
+        try {
+            Image image = imageService.getImageById(image_id);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; imageId=\"" + image.getImageId() + "\"")
+                    .contentType(MediaType.valueOf(image.getContentType()))
+                    .body(image.getData());
+        } catch (Exception exception) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

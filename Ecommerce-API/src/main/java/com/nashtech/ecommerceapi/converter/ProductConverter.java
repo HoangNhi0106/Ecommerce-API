@@ -5,6 +5,7 @@ import com.nashtech.ecommerceapi.entity.Image;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.service.CategoryService;
+import com.nashtech.ecommerceapi.service.ImageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class ProductConverter {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private ImageConverter imageConverter;
@@ -51,7 +55,7 @@ public class ProductConverter {
         return productDTOItem;
     }
 
-    public ProductDTOUpdate convertToDtoUpdate(Product product) {
+    /*public ProductDTOUpdate convertToDtoUpdate(Product product) {
         ProductDTOUpdate productDTOUpdate = modelMapper.map(product, ProductDTOUpdate.class);
         productDTOUpdate.setProductId(product.getProductId());
         productDTOUpdate.setCategoryName(product.getCategory().getCname());
@@ -62,11 +66,13 @@ public class ProductConverter {
         ProductDTOCreate productDTOCreate = modelMapper.map(product, ProductDTOCreate.class);
         productDTOCreate.setCategoryName(product.getCategory().getCname());
         return productDTOCreate;
-    }
+    }*/
 
     public Product convertToEntityCreate(ProductDTOCreate productDTOCreate) throws DataNotFoundException {
         Product product = modelMapper.map(productDTOCreate, Product.class);
         product.setCategory(categoryService.getCategoryByName(productDTOCreate.getCategoryName()));
+        if (productDTOCreate.getImage() != null)
+            product.setImage(imageService.getImageById(productDTOCreate.getImage()));
         return product;
     }
 

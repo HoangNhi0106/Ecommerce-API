@@ -14,7 +14,7 @@ public class ImageConverter {
 
     public ImageDTO convertToDto(Image image) {
         String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/image/")
+                .path("/public/image/")
                 .path(image.getImageId())
                 .toUriString();
         ImageDTO imageDTO = modelMapper.map(image, ImageDTO.class);

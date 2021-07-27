@@ -46,35 +46,6 @@ public class UserController {
 
     @Autowired
     private AccountConverter accountConverter;
-        
-    //ImageController
-    @PostMapping("/image")
-    public ResponseEntity<ResponseDTO> uploadImage(@RequestParam("file") MultipartFile file) {
-        ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            imageService.saveImage(file);
-
-            responseDTO.setData(true);
-            responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_SAVED);
-        } catch (Exception e) {
-            responseDTO.setData(false);
-            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_SAVED);
-        }
-        return ResponseEntity.ok().body(responseDTO);
-    }
-
-    @GetMapping("/image/{image_id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String image_id) {
-        try {
-            Image image = imageService.getImageById(image_id);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; imageId=\"" + image.getImageId() + "\"")
-                    .contentType(MediaType.valueOf(image.getContentType()))
-                    .body(image.getData());
-        } catch (Exception exception) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     //RatingController
     @PostMapping(value = "/rating/save")

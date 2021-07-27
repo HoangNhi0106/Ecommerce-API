@@ -3,6 +3,7 @@ package com.nashtech.ecommerceapi.dto;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 
@@ -20,6 +21,8 @@ public class ProductDTOCreate {
 
     @Min(value = 0)
     private long price;
+
+    private String image;
 
     private String description;
 }

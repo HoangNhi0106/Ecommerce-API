@@ -1,29 +1,23 @@
 package com.nashtech.ecommerceapi.controller;
 
+import com.nashtech.ecommerceapi.constant.ErrorCode;
 import com.nashtech.ecommerceapi.constant.SuccessCode;
-import com.nashtech.ecommerceapi.converter.AccountConverter;
-import com.nashtech.ecommerceapi.converter.CategoryConverter;
-import com.nashtech.ecommerceapi.converter.ProductConverter;
-import com.nashtech.ecommerceapi.converter.RatingConverter;
+import com.nashtech.ecommerceapi.converter.*;
 import com.nashtech.ecommerceapi.dto.*;
-import com.nashtech.ecommerceapi.entity.Account;
-import com.nashtech.ecommerceapi.entity.Category;
-import com.nashtech.ecommerceapi.entity.Product;
-import com.nashtech.ecommerceapi.entity.Rating;
+import com.nashtech.ecommerceapi.entity.*;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
 import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
-import com.nashtech.ecommerceapi.service.AccountService;
-import com.nashtech.ecommerceapi.service.CategoryService;
-import com.nashtech.ecommerceapi.service.ProductService;
-import com.nashtech.ecommerceapi.service.RatingService;
+import com.nashtech.ecommerceapi.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +51,12 @@ public class AdminController {
 
     @Autowired
     private AccountConverter accountConverter;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private ImageConverter imageConverter;
 
     //AccountController
     @GetMapping(value = "/account")
@@ -156,7 +156,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/product/save")
-    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody ProductDTOCreate productDTOCreate) throws CreateDataFailException, DataNotFoundException {
+    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody ProductDTOCreate productDTOCreate) throws CreateDataFailException, DataNotFoundException, IOException {
         ResponseDTO responseDTO = new ResponseDTO();
         Product product = productConverter.convertToEntityCreate(productDTOCreate);
         Product saveProduct = productService.addProduct(product);
@@ -204,6 +204,22 @@ public class AdminController {
         ratingService.deleteRating(ratingId);
         responseDTO.setData(true);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_RATING_DELETED);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    //ImageComtroller
+    @PostMapping("/image/save")
+    public ResponseEntity<ResponseDTO> uploadImage(@RequestParam("file") MultipartFile file) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            Image image = imageService.saveImage(file);
+            ImageDTO imageDTO = imageConverter.convertToDto(image);
+            responseDTO.setData(imageDTO);
+            responseDTO.setSuccessCode(SuccessCode.SUCCESS_IMAGE_SAVED);
+        } catch (Exception e) {
+            responseDTO.setData(null);
+            responseDTO.setErrorCode(ErrorCode.ERROR_IMAGE_NOT_SAVED);
+        }
         return ResponseEntity.ok().body(responseDTO);
     }
 }
