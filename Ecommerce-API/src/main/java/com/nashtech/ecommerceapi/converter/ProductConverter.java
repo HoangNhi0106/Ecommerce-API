@@ -80,6 +80,8 @@ public class ProductConverter {
         Product product = modelMapper.map(productDTOUpdate, Product.class);
         product.setProductId(productDTOUpdate.getProductId());
         product.setCategory(categoryService.getCategoryByName(productDTOUpdate.getCategoryName()));
+        if (productDTOUpdate.getImage() != null)
+            product.setImage(imageService.getImageById(productDTOUpdate.getImage()));
         return product;
     }
 }

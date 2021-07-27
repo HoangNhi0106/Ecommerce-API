@@ -20,6 +20,8 @@ public class ProductDTOUpdate {
     @NotNull
     private String categoryName;
 
+    private String image;
+
     @Min(value = 0)
     private int amount;
 

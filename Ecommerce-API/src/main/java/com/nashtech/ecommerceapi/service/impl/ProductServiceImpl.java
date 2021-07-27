@@ -78,13 +78,14 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProduct(Product product) throws UpdateDataFailException {
         try {
-            Product currentProduct = productRepository.getById(product.getProductId());
+            Product currentProduct = getProductById(product.getProductId());
             currentProduct.setPname(product.getPname());
             currentProduct.setCategory(product.getCategory());
             currentProduct.setPrice(product.getPrice());
             currentProduct.setAmount(product.getAmount());
             currentProduct.setUpdatedIn(LocalDateTime.now());
-            calculateRatingStar(currentProduct);
+            currentProduct.setImage(product.getImage());
+            currentProduct.setRating(calculateRatingStar(currentProduct));
             productRepository.save(currentProduct);
         } catch (Exception e) {
             throw new UpdateDataFailException(ErrorCode.ERROR_PRODUCT_NOT_UPDATED);
@@ -94,9 +95,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Float calculateRatingStar(Product product) throws DataNotFoundException {
         List<Rating> ratings = ratingService.getRatingByProduct(product);
-        if (ratings.isEmpty())
-            return null;
-        if (ratings.size() != 0) {
+        if (ratings != null) {
             Float star = (float) 0;
             for (Rating rating : ratings) {
                 star += rating.getStar();
@@ -114,4 +113,11 @@ public class ProductServiceImpl implements ProductService {
         else return products;
     }
 
+    public List<Product> getByNameContainting(String name) {
+        List<Product> products = productRepository.findByPnameContainingIgnoreCase(name);
+        if (products.isEmpty())
+            return null;
+        else
+            return products;
+    }
 }

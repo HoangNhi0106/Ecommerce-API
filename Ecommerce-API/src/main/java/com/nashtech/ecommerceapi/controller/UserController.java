@@ -49,7 +49,7 @@ public class UserController {
 
     //RatingController
     @PostMapping(value = "/rating/save")
-    public ResponseEntity<ResponseDTO> saveProduct(@Valid @RequestBody RatingDTOPost ratingDTOPost) throws DataNotFoundException, CreateDataFailException, UpdateDataFailException, ParseException {
+    public ResponseEntity<ResponseDTO> saveRating(@Valid @RequestBody RatingDTOPost ratingDTOPost) throws DataNotFoundException, CreateDataFailException, UpdateDataFailException, ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
         Rating rating = ratingConverter.convertToEntity(ratingDTOPost);
         ratingService.addRating(rating);

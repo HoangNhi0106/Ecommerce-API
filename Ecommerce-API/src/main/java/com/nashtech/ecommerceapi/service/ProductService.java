@@ -16,6 +16,8 @@ public interface ProductService {
 
     public List<Product> getAllSortById();
 
+    public List<Product> getByNameContainting(String name);
+
     public List<Product> getProductByCategory(Category category);
 
     public Product addProduct(Product product) throws CreateDataFailException;

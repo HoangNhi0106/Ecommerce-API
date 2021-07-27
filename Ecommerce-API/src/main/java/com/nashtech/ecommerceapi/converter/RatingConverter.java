@@ -4,8 +4,11 @@ import com.nashtech.ecommerceapi.dto.RatingDTOPost;
 import com.nashtech.ecommerceapi.dto.RatingDTOReview;
 import com.nashtech.ecommerceapi.dto.RatingDTOShow;
 import com.nashtech.ecommerceapi.entity.Rating;
+import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.repository.AccountRepository;
 import com.nashtech.ecommerceapi.repository.ProductRepository;
+import com.nashtech.ecommerceapi.service.AccountService;
+import com.nashtech.ecommerceapi.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,10 +18,10 @@ import java.text.ParseException;
 @Component
 public class RatingConverter {
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,10 +34,10 @@ public class RatingConverter {
         return ratingDTOPost;
     }
 
-    public Rating convertToEntity(RatingDTOPost ratingDTOPost) throws ParseException {
+    public Rating convertToEntity(RatingDTOPost ratingDTOPost) throws ParseException, DataNotFoundException {
         Rating rating = modelMapper.map(ratingDTOPost, Rating.class);
-        rating.setAccount(accountRepository.getById(ratingDTOPost.getAccountId()));
-        rating.setProduct(productRepository.getById(ratingDTOPost.getProductId()));
+        rating.setAccount(accountService.getAccountById(ratingDTOPost.getAccountId()));
+        rating.setProduct(productService.getProductById(ratingDTOPost.getProductId()));
         return rating;
     }
 

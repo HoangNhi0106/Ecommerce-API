@@ -87,18 +87,18 @@ public class PublicController {
     }
 
     //ProductController
-    /*@GetMapping("/product")
-    public ResponseEntity<ResponseDTO> findAllProduct() throws DataNotFoundException {
+    @GetMapping("/product/search={name}")
+    public ResponseEntity<ResponseDTO> searchProductByName(@PathVariable String name) throws DataNotFoundException {
         ResponseDTO responseDTO = new ResponseDTO();
         List<ProductDTO> productDTOs = new ArrayList<>();
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = productService.getByNameContainting(name);
         if (products != null)
             for (Product product : products)
                 productDTOs.add(productConverter.convertToDto(product));
         responseDTO.setData(productDTOs);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
         return ResponseEntity.ok().body(responseDTO);
-    }*/
+    }
 
     @GetMapping(value = "/product/product={id}")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) throws DataNotFoundException {
