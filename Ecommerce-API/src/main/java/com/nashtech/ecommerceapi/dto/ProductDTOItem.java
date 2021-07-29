@@ -17,5 +17,7 @@ public class ProductDTOItem {
     @Max(value = 5, message = "Maximum star is 5")
     private Float rating;
 
+    private long price;
+
     private String image;
 }

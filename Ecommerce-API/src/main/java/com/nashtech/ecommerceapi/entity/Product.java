@@ -46,6 +46,7 @@ public class Product {
     @Column(name = "rating_star")
     private Float rating;
 
+    //nhieu hinh anh
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;

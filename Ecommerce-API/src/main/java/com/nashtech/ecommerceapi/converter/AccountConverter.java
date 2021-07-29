@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.converter;
 
 import com.nashtech.ecommerceapi.dto.AccountDTO;
+import com.nashtech.ecommerceapi.dto.AccountDTOAdmin;
 import com.nashtech.ecommerceapi.entity.Account;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class AccountConverter {
     public Account convertToEntity(AccountDTO accountDTO) throws ParseException {
         Account account = modelMapper.map(accountDTO, Account.class);
         return account;
+    }
+
+    public AccountDTOAdmin convertToDtoAdmin(Account account) {
+        AccountDTOAdmin accountDTOAdmin = modelMapper.map(account, AccountDTOAdmin.class);
+        accountDTOAdmin.setAccountId(account.getAccountId());
+        return accountDTOAdmin;
     }
 }

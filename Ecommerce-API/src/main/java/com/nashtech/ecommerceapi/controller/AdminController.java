@@ -63,12 +63,12 @@ public class AdminController {
     public ResponseEntity<ResponseDTO> findAllAccount() {
         ResponseDTO responseDTO = new ResponseDTO();
         List<Account> accounts = accountService.getAllAccount();
-        List<AccountDTO> accountDTOS = new ArrayList<>();
+        List<AccountDTOAdmin> accountDTOAdmins = new ArrayList<>();
         if (accounts != null) {
             for (Account account : accounts)
-                accountDTOS.add(accountConverter.convertToDto(account));
+                accountDTOAdmins.add(accountConverter.convertToDtoAdmin(account));
         }
-        responseDTO.setData(accountDTOS);
+        responseDTO.setData(accountDTOAdmins);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_USER_FOUND);
         return ResponseEntity.ok().body(responseDTO);
     }
