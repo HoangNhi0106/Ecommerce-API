@@ -19,6 +19,14 @@ public interface ProductService {
 
     public List<Product> getByNameContainting(String name);
 
+    public List<Product> sortProductByPriceAsc(Category category);
+
+    public List<Product> sortProductByPriceDesc(Category category);
+
+    public List<Product> sortByProductByCreatedInDesc(Category category);
+
+    public List<Product> sortByProductByRatingDesc(Category category);
+
     public List<Product> getProductByCategory(Category category);
 
     public Product addProduct(Product product) throws CreateDataFailException;

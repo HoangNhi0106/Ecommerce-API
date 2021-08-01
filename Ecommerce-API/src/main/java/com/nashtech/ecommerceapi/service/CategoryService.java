@@ -20,4 +20,6 @@ public interface CategoryService {
     public void updateCategory(Category category) throws UpdateDataFailException;
 
     public void deleteCategory(Long categoryId) throws DeleteDataFailException;
+
+    public List<Category> getByNameContainting(String name);
 }

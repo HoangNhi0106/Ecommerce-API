@@ -77,4 +77,11 @@ public class BrandServiceImpl implements BrandService {
             throw new DeleteDataFailException(ErrorCode.ERROR_BRAND_NOT_DELETED);
         }
     }
+
+    public List<Brand> getByNameContainting(String name) {
+        List<Brand> brands = brandRepository.findByBnameContainingIgnoreCase(name);
+        if (brands.isEmpty())
+            return null;
+        else return brands;
+    }
 }

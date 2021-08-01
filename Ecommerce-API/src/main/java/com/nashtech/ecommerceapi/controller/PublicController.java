@@ -87,19 +87,6 @@ public class PublicController {
     }
 
     //ProductController
-    @GetMapping("/product/search={name}")
-    public ResponseEntity<ResponseDTO> searchProductByName(@PathVariable String name) throws DataNotFoundException {
-        ResponseDTO responseDTO = new ResponseDTO();
-        List<ProductDTO> productDTOs = new ArrayList<>();
-        List<Product> products = productService.getByNameContainting(name);
-        if (products != null)
-            for (Product product : products)
-                productDTOs.add(productConverter.convertToDto(product));
-        responseDTO.setData(productDTOs);
-        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
-        return ResponseEntity.ok().body(responseDTO);
-    }
-
     @GetMapping(value = "/product/product={id}")
     public ResponseEntity<ResponseDTO> findProduct(@PathVariable Long id) throws DataNotFoundException {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -169,5 +156,76 @@ public class PublicController {
         } catch (Exception exception) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    //Search
+    @GetMapping("/product/search={name}")
+    public ResponseEntity<ResponseDTO> searchProductByName(@PathVariable String name) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.getByNameContainting(name);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    //Sort
+    @GetMapping("/product/category={cname}/sort/price/asc")
+    public ResponseEntity<ResponseDTO> sortProductByPriceAsc(@PathVariable String cname) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Category category = categoryService.getCategoryByName(cname);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.sortProductByPriceAsc(category);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/product/category={cname}/sort/price/desc")
+    public ResponseEntity<ResponseDTO> sortProductByPriceDesc(@PathVariable String cname) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Category category = categoryService.getCategoryByName(cname);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.sortProductByPriceDesc(category);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/product/category={cname}/sort/rating")
+    public ResponseEntity<ResponseDTO> sortProductByRatingDesc(@PathVariable String cname) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Category category = categoryService.getCategoryByName(cname);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.sortByProductByRatingDesc(category);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/product/category={cname}/sort/createdin")
+    public ResponseEntity<ResponseDTO> sortProductByCreatedInDesc(@PathVariable String cname) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Category category = categoryService.getCategoryByName(cname);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.sortByProductByCreatedInDesc(category);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
     }
 }

@@ -279,4 +279,56 @@ public class AdminController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
+    //Search
+    @GetMapping("/product/search={name}")
+    public ResponseEntity<ResponseDTO> searchProductByName(@PathVariable String name) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        List<Product> products = productService.getByNameContainting(name);
+        if (products != null)
+            for (Product product : products)
+                productDTOs.add(productConverter.convertToDto(product));
+        responseDTO.setData(productDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/category/search={name}")
+    public ResponseEntity<ResponseDTO> searchCategoryByName(@PathVariable String name) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        List<Category> categories = categoryService.getByNameContainting(name);
+        if (categories != null)
+            for (Category category : categories)
+                categoryDTOS.add(categoryConverter.convertToDto(category));
+        responseDTO.setData(categoryDTOS);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/account/search={name}")
+    public ResponseEntity<ResponseDTO> searchAccountByName(@PathVariable String name) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<AccountDTOAdmin> accountDTOAdmins = new ArrayList<>();
+        List<Account> accounts = accountService.getByNameContainting(name);
+        if (accounts != null)
+            for (Account account : accounts)
+                accountDTOAdmins.add(accountConverter.convertToDtoAdmin(account));
+        responseDTO.setData(accountDTOAdmins);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @GetMapping("/brand/search={name}")
+    public ResponseEntity<ResponseDTO> searchBrandByName(@PathVariable String name) throws DataNotFoundException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<BrandDTO> brandDTOS = new ArrayList<>();
+        List<Brand> brands = brandService.getByNameContainting(name);
+        if (brands != null)
+            for (Brand brand : brands)
+                brandDTOS.add(brandConverter.convertToDto(brand));
+        responseDTO.setData(brandDTOS);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_PRODUCT_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
 }

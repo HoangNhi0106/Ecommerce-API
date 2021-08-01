@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return star / ratings.size();
         } else {
-            return (float) 0;
+            return null;
         }
     }
 
@@ -120,6 +120,34 @@ public class ProductServiceImpl implements ProductService {
 
     public List<Product> getProductByBrand(Brand brand) {
         List<Product> products = productRepository.findAllByBrand(brand);
+        if (products.isEmpty())
+            return null;
+        else return products;
+    }
+
+    public List<Product> sortProductByPriceAsc(Category category) {
+        List<Product> products = productRepository.findByCategoryOrderByPriceAsc(category);
+        if (products.isEmpty())
+            return null;
+        else return products;
+    }
+
+    public List<Product> sortProductByPriceDesc(Category category) {
+        List<Product> products = productRepository.findByCategoryOrderByPriceDesc(category);
+        if (products.isEmpty())
+            return null;
+        else return products;
+    }
+
+    public List<Product> sortByProductByCreatedInDesc(Category category) {
+        List<Product> products = productRepository.findByCategoryOrderByCreatedInDesc(category);
+        if (products.isEmpty())
+            return null;
+        else return products;
+    }
+
+    public List<Product> sortByProductByRatingDesc(Category category) {
+        List<Product> products = productRepository.findByCategoryOrderByRatingDesc(category);
         if (products.isEmpty())
             return null;
         else return products;

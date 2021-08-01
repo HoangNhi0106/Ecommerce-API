@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.service;
 
 import com.nashtech.ecommerceapi.entity.Brand;
+import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
 import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
 import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
@@ -19,4 +20,6 @@ public interface BrandService {
     public void updateBrand(Brand brand) throws UpdateDataFailException;
 
     public void deleteBrand(Long id) throws DeleteDataFailException;
+
+    public List<Brand> getByNameContainting(String name);
 }

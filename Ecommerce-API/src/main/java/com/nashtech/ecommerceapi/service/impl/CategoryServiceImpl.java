@@ -80,6 +80,12 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (Exception e) {
             throw new DeleteDataFailException(ErrorCode.ERROR_CATEGORY_NOT_DELETED);
         }
+    }
 
+    public List<Category> getByNameContainting(String name) {
+        List<Category> categories = categoryRepository.findCategoryByCnameContainingIgnoreCase(name);
+        if (categories.isEmpty())
+            return null;
+        else return categories;
     }
 }

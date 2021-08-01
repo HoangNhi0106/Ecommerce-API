@@ -1,6 +1,7 @@
 package com.nashtech.ecommerceapi.service;
 
 import com.nashtech.ecommerceapi.entity.Account;
+import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
 import com.nashtech.ecommerceapi.exception.UpdateDataFailException;
@@ -21,4 +22,6 @@ public interface AccountService {
     public void updateAccountRoles(Account account) throws DataNotFoundException, UpdateDataFailException;
 
     public void deleteAccount(Long id) throws DeleteDataFailException;
+
+    public List<Account> getByNameContainting(String name);
 }

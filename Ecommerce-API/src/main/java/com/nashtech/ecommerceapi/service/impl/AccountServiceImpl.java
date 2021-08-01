@@ -113,4 +113,11 @@ public class AccountServiceImpl implements AccountService {
             throw new DeleteDataFailException(ErrorCode.ERROR_USER_NOT_DELETED);
         }
     }
+
+    public List<Account> getByNameContainting(String name) {
+        List<Account> accounts = accountRepository.findAccountByUsernameContainingIgnoreCase(name);
+        if (accounts.isEmpty())
+            return null;
+        else return accounts;
+    }
 }
