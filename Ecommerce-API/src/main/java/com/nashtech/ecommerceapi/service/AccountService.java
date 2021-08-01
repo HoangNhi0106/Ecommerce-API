@@ -18,5 +18,7 @@ public interface AccountService {
 
     public void updateAccount(Account account) throws DataNotFoundException, UpdateDataFailException;
 
+    public void updateAccountRoles(Account account) throws DataNotFoundException, UpdateDataFailException;
+
     public void deleteAccount(Long id) throws DeleteDataFailException;
 }

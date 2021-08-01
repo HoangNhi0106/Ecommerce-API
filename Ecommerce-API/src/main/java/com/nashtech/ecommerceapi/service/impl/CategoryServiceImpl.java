@@ -62,7 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     public void updateCategory(Category category) throws UpdateDataFailException {
         Category currentCategory = categoryRepository.getById(category.getCategoryId());
-        currentCategory.setCname(category.getCname());
         currentCategory.setDescription(category.getDescription());
         currentCategory.setUpdatedIn(LocalDateTime.now());
         Category c = categoryRepository.save(currentCategory);

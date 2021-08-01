@@ -29,4 +29,12 @@ public class ProductDTOUpdate {
     private long price;
 
     private String description;
+
+    private String brandName;
+
+    private String volume;
+
+    private String madeIn;
+
+    private String skinType;
 }

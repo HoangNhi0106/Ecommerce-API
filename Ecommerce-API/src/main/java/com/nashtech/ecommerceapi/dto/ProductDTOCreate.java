@@ -25,4 +25,13 @@ public class ProductDTOCreate {
     private String image;
 
     private String description;
+
+    @NotNull
+    private String brandName;
+
+    private String volume;
+
+    private String madeIn;
+
+    private String skinType;
 }

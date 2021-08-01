@@ -39,6 +39,12 @@ public class AdminController {
     @Autowired
     private RatingService ratingService;
 
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private  BrandService brandService;
+
     //Converter
     @Autowired
     private CategoryConverter categoryConverter;
@@ -53,10 +59,10 @@ public class AdminController {
     private AccountConverter accountConverter;
 
     @Autowired
-    private ImageService imageService;
+    private ImageConverter imageConverter;
 
     @Autowired
-    private ImageConverter imageConverter;
+    private BrandConverter brandConverter;
 
     //AccountController
     @GetMapping(value = "/account")
@@ -73,10 +79,19 @@ public class AdminController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
+    @PutMapping("/account/update")
+    public ResponseEntity<ResponseDTO> updateAccountRoles(@Valid @RequestBody AccountDTOUpdateRoles accountDTOUpdateRoles) throws DataNotFoundException, UpdateDataFailException, ParseException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Account account = accountConverter.convertToEntityUpdateRoles(accountDTOUpdateRoles);
+        accountService.updateAccountRoles(account);
+        responseDTO.setData(accountConverter.convertToDto(account));
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_USER_UPDATED);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
     @DeleteMapping(value = "/account/delete/{id}")
     public ResponseEntity<ResponseDTO> deleteAccount(@PathVariable Long id) throws DeleteDataFailException {
         ResponseDTO responseDTO = new ResponseDTO();
-        Account account = accountService.getAccountById(id);
         accountService.deleteAccount(id);
         responseDTO.setData(true);
         responseDTO.setSuccessCode(SuccessCode.SUCCESS_USER_DELETED);
@@ -99,7 +114,6 @@ public class AdminController {
     }
 
     @PostMapping(value = "/category/save")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO> saveCategory(@Valid @RequestBody CategoryDTOCreate categoryDTOCreate) throws ParseException, CreateDataFailException {
         ResponseDTO responseDTO = new ResponseDTO();
         Category category = categoryConverter.convertToEntityCreate(categoryDTOCreate);
@@ -110,7 +124,6 @@ public class AdminController {
     }
 
     @PutMapping(value = "/category/update")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO> updateCategory(@Valid @RequestBody CategoryDTOUpdate categoryDTOUpdate) throws UpdateDataFailException, ParseException {
         ResponseDTO responseDTO = new ResponseDTO();
         Category category = categoryConverter.convertToEntityUpdate(categoryDTOUpdate);
@@ -207,7 +220,7 @@ public class AdminController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    //ImageComtroller
+    //ImageController
     @PostMapping("/image/save")
     public ResponseEntity<ResponseDTO> uploadImage(@RequestParam("file") MultipartFile file) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -222,4 +235,48 @@ public class AdminController {
         }
         return ResponseEntity.ok().body(responseDTO);
     }
+
+    //BrandController
+    @GetMapping(value = "/brand")
+    public ResponseEntity<ResponseDTO> findAllBrand() {
+        ResponseDTO responseDTO = new ResponseDTO();
+        List<Brand> brands = brandService.getAllBrands();
+        List<BrandDTO> brandDTOs = new ArrayList<>();
+        if (brandDTOs != null) {
+            for (Brand brand : brands)
+                brandDTOs.add(brandConverter.convertToDto(brand));
+        }
+        responseDTO.setData(brandDTOs);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_BRAND_FOUND);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @PostMapping(value = "/brand/save")
+    public ResponseEntity<ResponseDTO> saveBrand(@Valid @RequestBody BrandDTOCreate brandDTOCreate) throws ParseException, CreateDataFailException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Brand brand = brandConverter.convertToEntityCreate(brandDTOCreate);
+        Brand saveBrand = brandService.addBrand(brand);
+        responseDTO.setData(brandConverter.convertToDto(saveBrand));
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_BRAND_SAVED);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @PutMapping(value = "/brand/update")
+    public ResponseEntity<ResponseDTO> updateBrand(@Valid @RequestBody BrandDTOUpdate brandDTOUpdate) throws UpdateDataFailException, ParseException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        Brand brand = brandConverter.convertToEntityUpdate(brandDTOUpdate);
+        brandService.updateBrand(brand);
+        responseDTO.setData(brandConverter.convertToDto(brand));
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_BRAND_UPDATED);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @DeleteMapping(value = "/brand/delete/{brandId}")
+    public ResponseEntity<ResponseDTO> deleteBrand(@PathVariable Long brandId) throws DeleteDataFailException {
+        ResponseDTO responseDTO = new ResponseDTO();
+        brandService.deleteBrand(brandId);
+        responseDTO.setSuccessCode(SuccessCode.SUCCESS_BRAND_DELETED);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
 }

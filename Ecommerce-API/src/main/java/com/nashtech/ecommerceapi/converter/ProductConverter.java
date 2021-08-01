@@ -4,6 +4,7 @@ import com.nashtech.ecommerceapi.dto.*;
 import com.nashtech.ecommerceapi.entity.Image;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
+import com.nashtech.ecommerceapi.service.BrandService;
 import com.nashtech.ecommerceapi.service.CategoryService;
 import com.nashtech.ecommerceapi.service.ImageService;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,9 @@ public class ProductConverter {
     private CategoryService categoryService;
 
     @Autowired
+    private BrandService brandService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -30,6 +34,7 @@ public class ProductConverter {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         productDTO.setProductId(product.getProductId());
         productDTO.setCategoryName(product.getCategory().getCname());
+        productDTO.setBrandName(product.getBrand().getBname());
         Image image = product.getImage();
         if (image != null) {
             ImageDTO imageDTO = imageConverter.convertToDto(image);
@@ -41,6 +46,7 @@ public class ProductConverter {
     public Product convertToEntity(ProductDTO productDTO) throws DataNotFoundException {
         Product product = modelMapper.map(productDTO, Product.class);
         product.setCategory(categoryService.getCategoryByName(productDTO.getCategoryName()));
+        product.setBrand(brandService.getBrandByBname(productDTO.getBrandName()));
         return product;
     }
 
@@ -71,6 +77,7 @@ public class ProductConverter {
     public Product convertToEntityCreate(ProductDTOCreate productDTOCreate) throws DataNotFoundException {
         Product product = modelMapper.map(productDTOCreate, Product.class);
         product.setCategory(categoryService.getCategoryByName(productDTOCreate.getCategoryName()));
+        product.setBrand(brandService.getBrandByBname(productDTOCreate.getBrandName()));
         if (productDTOCreate.getImage() != null)
             product.setImage(imageService.getImageById(productDTOCreate.getImage()));
         return product;
@@ -80,6 +87,7 @@ public class ProductConverter {
         Product product = modelMapper.map(productDTOUpdate, Product.class);
         product.setProductId(productDTOUpdate.getProductId());
         product.setCategory(categoryService.getCategoryByName(productDTOUpdate.getCategoryName()));
+        product.setBrand(brandService.getBrandByBname(productDTOUpdate.getBrandName()));
         if (productDTOUpdate.getImage() != null)
             product.setImage(imageService.getImageById(productDTOUpdate.getImage()));
         return product;

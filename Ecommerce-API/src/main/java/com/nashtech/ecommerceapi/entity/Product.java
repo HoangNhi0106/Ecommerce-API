@@ -59,4 +59,17 @@ public class Product {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
+
+    @Column(name = "volume")
+    private String volume;
+
+    @Column(name = "made_in")
+    private String madeIn;
+
+    @Column(name = "skin_type")
+    private String skinType;
 }

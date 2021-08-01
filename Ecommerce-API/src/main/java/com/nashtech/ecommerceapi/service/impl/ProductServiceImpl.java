@@ -1,10 +1,7 @@
 package com.nashtech.ecommerceapi.service.impl;
 
 import com.nashtech.ecommerceapi.constant.ErrorCode;
-import com.nashtech.ecommerceapi.entity.Category;
-import com.nashtech.ecommerceapi.entity.Image;
-import com.nashtech.ecommerceapi.entity.Product;
-import com.nashtech.ecommerceapi.entity.Rating;
+import com.nashtech.ecommerceapi.entity.*;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
 import com.nashtech.ecommerceapi.exception.DataNotFoundException;
 import com.nashtech.ecommerceapi.exception.DeleteDataFailException;
@@ -119,5 +116,12 @@ public class ProductServiceImpl implements ProductService {
             return null;
         else
             return products;
+    }
+
+    public List<Product> getProductByBrand(Brand brand) {
+        List<Product> products = productRepository.findAllByBrand(brand);
+        if (products.isEmpty())
+            return null;
+        else return products;
     }
 }

@@ -6,9 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryDTOUpdate {
+public class BrandDTOCreate {
     @NotNull
-    private long categoryId;
+    private String bname;
 
-    private String description;
+    @NotNull
+    private String madeIn;
 }

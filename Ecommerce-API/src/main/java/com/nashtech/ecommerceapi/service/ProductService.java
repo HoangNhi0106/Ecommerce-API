@@ -1,5 +1,6 @@
 package com.nashtech.ecommerceapi.service;
 
+import com.nashtech.ecommerceapi.entity.Brand;
 import com.nashtech.ecommerceapi.entity.Category;
 import com.nashtech.ecommerceapi.entity.Product;
 import com.nashtech.ecommerceapi.exception.CreateDataFailException;
@@ -25,6 +26,8 @@ public interface ProductService {
     public void deleteProduct(Long productId) throws DeleteDataFailException;
 
     public void updateProduct(Product product) throws UpdateDataFailException;
+
+    public List<Product> getProductByBrand(Brand brand);
 
     public Float calculateRatingStar(Product product) throws DataNotFoundException;
 }

@@ -1,9 +1,12 @@
 package com.nashtech.ecommerceapi.dto;
 
+import com.nashtech.ecommerceapi.entity.Brand;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
@@ -37,4 +40,12 @@ public class ProductDTO {
     private LocalDateTime updatedIn;
 
     private String description;
+
+    private String brandName;
+
+    private String volume;
+
+    private String madeIn;
+
+    private String skinType;
 }

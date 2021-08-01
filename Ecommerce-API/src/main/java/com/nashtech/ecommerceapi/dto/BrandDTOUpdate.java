@@ -4,11 +4,13 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-public class CategoryDTOUpdate {
+public class BrandDTOUpdate {
     @NotNull
-    private long categoryId;
-
-    private String description;
+    private long brandId;
+    @NotNull
+    private String madeIn;
 }
